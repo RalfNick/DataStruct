@@ -8,9 +8,9 @@ package queue;
  **/
 public interface Queue<E> {
 
-    boolean push(E e);
+    boolean enQueque(E e);
 
-    E poll();
+    E deQueue();
 
     E peek();
 

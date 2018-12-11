@@ -25,7 +25,7 @@ public class RArrayQueue<T> implements Queue<T> {
     }
 
     @Override
-    public boolean push(T t) {
+    public boolean enQueque(T t) {
         checkQueue();
         if (isFull()) {
             return false;
@@ -37,7 +37,7 @@ public class RArrayQueue<T> implements Queue<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public T poll() {
+    public T deQueue() {
         checkQueue();
         if (isEmpty()) {
             return null;

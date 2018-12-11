@@ -18,7 +18,7 @@ public class RArrayQueueTest {
         Assert.assertTrue(queue.isEmpty());
         Assert.assertEquals(0, queue.size());
         for (int i = 0; i < 10; i++) {
-            queue.push(i);
+            queue.enQueque(i);
             Assert.assertFalse(queue.isEmpty());
             Assert.assertEquals(i + 1, queue.size());
         }
@@ -29,13 +29,13 @@ public class RArrayQueueTest {
     public void testPoll() {
         RArrayQueue<Integer> queue = new RArrayQueue<>();
         for (int i = 0; i < 10; i++) {
-            queue.push(i);
+            queue.enQueque(i);
         }
 
         for (int i = 0; i < 10; i++) {
             int peek = queue.peek();
             Assert.assertEquals(i,peek);
-            int poll = queue.poll();
+            int poll = queue.deQueue();
             Assert.assertEquals(i,poll);
         }
     }
