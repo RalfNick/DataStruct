@@ -7,15 +7,14 @@ import org.junit.Test;
  * DESCRIPTION
  *
  * @author lixin
- * @create 2018-12-15 下午9:01
+ * @create 2018-12-13 下午11:11
  **/
-public class RArrayQueueTest {
-
+public class QueueWithTwoStacksTest {
 
     @Test
     public void testSize() {
 
-        RArrayQueue<Integer> queue = new RArrayQueue<>();
+        QueueWithTwoStacks<Integer> queue = new QueueWithTwoStacks<>();
         Assert.assertTrue(queue.isEmpty());
         Assert.assertEquals(0, queue.size());
         for (int i = 0; i < 10; i++) {
@@ -29,7 +28,7 @@ public class RArrayQueueTest {
 
     @Test
     public void testPoll() {
-        RArrayQueue<Integer> queue = new RArrayQueue<>();
+        QueueWithTwoStacks<Integer> queue = new QueueWithTwoStacks<>();
         for (int i = 0; i < 10; i++) {
             queue.enQueque(i);
         }
@@ -41,20 +40,4 @@ public class RArrayQueueTest {
             Assert.assertEquals(i,poll);
         }
     }
-
-    @Test
-    public void testEnqueueAndDequeue(){
-
-        RArrayQueue<Integer> queue = new RArrayQueue<>();
-        for (int i = 0; i < 10; i++) {
-            queue.enQueque(i);
-        }
-        Assert.assertFalse(queue.enQueque(10));
-
-        Assert.assertEquals(0,queue.deQueue().intValue());
-        queue.enQueque(10);
-        Assert.assertTrue(queue.isFull());
-
-    }
-
 }

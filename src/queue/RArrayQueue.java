@@ -4,83 +4,76 @@ package queue;
  * DESCRIPTION
  *
  * @author lixin
- * @create 2018-12-10 下午7:34
+ * @create 2018-12-15 下午9:00
  **/
 public class RArrayQueue<T> implements Queue<T> {
 
-    private static final int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_SIZE = 10;
     private Object[] elements;
-    private int front = 0;
-    private int rear = 0;
+    private int head;
+    private int tail;
 
     public RArrayQueue() {
-        this(DEFAULT_CAPACITY);
+        this(DEFAULT_SIZE);
     }
 
-    public RArrayQueue(int capacity) {
-        if (capacity < 1) {
-            capacity = DEFAULT_CAPACITY;
+    public RArrayQueue(int size) {
+        if (size < 1) {
+            size = DEFAULT_SIZE;
         }
-        elements = new Object[capacity + 1];
+        elements = new Object[size + 1];
     }
 
     @Override
     public boolean enQueque(T t) {
-        checkQueue();
         if (isFull()) {
             return false;
         }
-        elements[rear] = t;
-        rear = (rear + 1) % elements.length;
+        if (tail == elements.length) {
+            if (isEmpty()) {
+                head = 0;
+                tail = 0;
+            } else {
+                Object[] newElements = new Object[elements.length];
+                System.arraycopy(elements, head, newElements, 0, size());
+                elements = newElements;
+                tail = size();
+                head = 0;
+            }
+        }
+        elements[tail++] = t;
         return true;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public T deQueue() {
-        checkQueue();
         if (isEmpty()) {
             return null;
         }
-        T t = (T) elements[front];
-        elements[front] = null;
-        front = (front + 1) % elements.length;
-        return t;
+        return (T) elements[head++];
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public T peek() {
-        checkQueue();
         if (isEmpty()) {
             return null;
         }
-        return (T) elements[front];
+        return (T) elements[head];
     }
 
     @Override
     public int size() {
-        checkQueue();
-        return (rear - front + elements.length) % elements.length;
+        return tail - head;
     }
 
     public boolean isEmpty() {
-        return front == rear;
+        return head == tail;
     }
 
     public boolean isFull() {
-        return (rear + 1) % elements.length == front;
+        return size() == elements.length  - 1;
     }
 
-    private void checkQueue() {
-        if (elements == null || elements.length < 1) {
-            throw new NullPointerException("Queue is null!");
-        }
-        if (front < 0 || front >= elements.length) {
-            throw new IndexOutOfBoundsException("index id out of bounds!");
-        }
-        if (rear < 0 || rear >= elements.length) {
-            throw new IndexOutOfBoundsException("index id out of bounds!");
-        }
-    }
 }
