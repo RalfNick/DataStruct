@@ -9,7 +9,7 @@ import List.RList;
  * @author lixin
  * @create 2018-12-23 下午3:14
  **/
-public class RLinkedList<T> implements RList<T> {
+public class SLinkedList<T> implements RList<T> {
 
     /**
      * 链表节点
@@ -29,7 +29,7 @@ public class RLinkedList<T> implements RList<T> {
     private Node<T> last;
     private int size;
 
-    public RLinkedList() {
+    public SLinkedList() {
         first = last = null;
     }
 
@@ -378,7 +378,7 @@ public class RLinkedList<T> implements RList<T> {
      * 返回的结果应该是[101,301,401,601]
      */
     @SuppressWarnings("unchecked")
-    public T[] getElements(RLinkedList<Integer> list) {
+    public T[] getElements(SLinkedList<Integer> list) {
 
         if (list == null || list.isEmpty()) {
             return null;
@@ -405,7 +405,7 @@ public class RLinkedList<T> implements RList<T> {
      * 已知链表中的元素以值递增有序排列，并以单链表作存储结构。
      * 从当前链表中中删除在list中出现的元素
      */
-    public void subtract(RLinkedList<Integer> list) {
+    public void subtract(SLinkedList<Integer> list) {
         if (list == null || list.isEmpty()) {
             return;
         }
@@ -481,14 +481,14 @@ public class RLinkedList<T> implements RList<T> {
      * 现要求生成新链表C，其元素为当前链表和list中元素的交集，且表C中的元素有依值递增有序排列
      */
     @SuppressWarnings("unchecked")
-    public RLinkedList<Integer> intersection(RLinkedList<Integer> list) {
+    public SLinkedList<Integer> intersection(SLinkedList<Integer> list) {
         if (isEmpty()) {
             return list;
         }
         if (list == null || list.isEmpty()) {
-            return (RLinkedList<Integer>) this;
+            return (SLinkedList<Integer>) this;
         }
-        RLinkedList<Integer> resultList = new RLinkedList<>();
+        SLinkedList<Integer> resultList = new SLinkedList<>();
         Node<Integer> node;
         if (list.first.item > (Integer) this.last.item) {
             for (node = (Node<Integer>) first; node != null; node = node.next) {

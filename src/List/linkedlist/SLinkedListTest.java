@@ -12,11 +12,11 @@ import java.util.Arrays;
  * @author lixin
  * @create 2018-12-23 下午6:01
  **/
-public class RLinkedListTest {
+public class SLinkedListTest {
 
     @Test
     public void testSize() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         Assert.assertTrue(linkedList.isEmpty());
         Assert.assertEquals(0, linkedList.size());
 
@@ -29,7 +29,7 @@ public class RLinkedListTest {
     @Test
     public void testContain() {
 
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             linkedList.add(i);
         }
@@ -43,7 +43,7 @@ public class RLinkedListTest {
 
     @Test
     public void testIndexOf() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             linkedList.add(i);
         }
@@ -53,7 +53,7 @@ public class RLinkedListTest {
         }
 
         // 空和一个元素
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         Assert.assertEquals(-1, linkedList1.indexOf(0));
         linkedList1.add(0);
         Assert.assertEquals(0, linkedList1.indexOf(0));
@@ -62,7 +62,7 @@ public class RLinkedListTest {
 
     @Test
     public void testGet() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             linkedList.add(i);
         }
@@ -72,14 +72,14 @@ public class RLinkedListTest {
         }
 
         // 空和一个元素
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(0);
         Assert.assertEquals(0, linkedList1.indexOf(0));
     }
 
     @Test
     public void testClear() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             linkedList.add(i);
         }
@@ -91,7 +91,7 @@ public class RLinkedListTest {
     @Test
     public void testSet() {
 
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             linkedList.add(i);
         }
@@ -111,7 +111,7 @@ public class RLinkedListTest {
     @Test
     public void testToArray() {
 
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             linkedList.add(i);
         }
@@ -124,7 +124,7 @@ public class RLinkedListTest {
 
     @Test
     public void testAdd() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 10; i++) {
             boolean result = linkedList.add(i);
             Assert.assertTrue(result);
@@ -147,7 +147,7 @@ public class RLinkedListTest {
         System.out.println(Arrays.toString(integers));
 
         // 空链表插入
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(0, 14);
         Assert.assertEquals(1, linkedList1.size());
         Assert.assertEquals(14, linkedList1.get(0).intValue());
@@ -155,7 +155,7 @@ public class RLinkedListTest {
 
     @Test
     public void testRemoveLast() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 10; i++) {
             boolean result = linkedList.add(i);
             Assert.assertTrue(result);
@@ -169,7 +169,7 @@ public class RLinkedListTest {
 
     @Test
     public void testRemoveByIndex() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             boolean result = linkedList.add(i);
             Assert.assertTrue(result);
@@ -187,7 +187,7 @@ public class RLinkedListTest {
 
     @Test
     public void testRemove() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             boolean result = linkedList.add(i);
             Assert.assertTrue(result);
@@ -215,7 +215,7 @@ public class RLinkedListTest {
     @Test
     public void testIterator() {
 
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         for (int i = 0; i < 5; i++) {
             boolean result = linkedList.add(i);
             Assert.assertTrue(result);
@@ -237,7 +237,7 @@ public class RLinkedListTest {
      */
     @Test
     public void reverse() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         linkedList.add(3);
         linkedList.add(7);
         linkedList.add(10);
@@ -261,7 +261,7 @@ public class RLinkedListTest {
      */
     @Test
     public void removeFirstHalf() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         linkedList.add(2);
         linkedList.add(5);
         linkedList.add(7);
@@ -281,7 +281,7 @@ public class RLinkedListTest {
      */
     @Test
     public void remove() {
-        RLinkedList<Integer> linkedList = new RLinkedList<>();
+        SLinkedList<Integer> linkedList = new SLinkedList<>();
         linkedList.add(2);
         linkedList.add(5);
         linkedList.add(7);
@@ -293,7 +293,7 @@ public class RLinkedListTest {
         Assert.assertEquals(1, linkedList.size());
         Assert.assertEquals(9, linkedList.get(0).intValue());
 
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(2);
         linkedList1.add(5);
         linkedList1.add(7);
@@ -319,7 +319,7 @@ public class RLinkedListTest {
      */
     @Test
     public void getElementsTest() {
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(11);
         linkedList1.add(101);
         linkedList1.add(201);
@@ -329,7 +329,7 @@ public class RLinkedListTest {
         linkedList1.add(601);
         linkedList1.add(701);
 
-        RLinkedList<Integer> linkedList2 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList2 = new SLinkedList<>();
         linkedList2.add(1);
         linkedList2.add(3);
         linkedList2.add(4);
@@ -349,7 +349,7 @@ public class RLinkedListTest {
      */
     @Test
     public void subtract() {
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(1);
         linkedList1.add(2);
         linkedList1.add(4);
@@ -360,7 +360,7 @@ public class RLinkedListTest {
         linkedList1.add(10);
         Assert.assertEquals(8, linkedList1.size());
 
-        RLinkedList<Integer> linkedList2 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList2 = new SLinkedList<>();
         linkedList2.add(1);
         linkedList2.add(4);
         linkedList2.add(7);
@@ -378,7 +378,7 @@ public class RLinkedListTest {
     @Test
     public void removeDuplicateValues() {
 
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(0);
         linkedList1.add(0);
         linkedList1.add(1);
@@ -410,7 +410,7 @@ public class RLinkedListTest {
      */
     @Test
     public void removeRange() {
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(0);
         linkedList1.add(0);
         linkedList1.add(1);
@@ -461,27 +461,27 @@ public class RLinkedListTest {
      */
     @Test
     public void intersection() {
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(1);
         linkedList1.add(2);
         linkedList1.add(4);
         linkedList1.add(5);
 
-        RLinkedList<Integer> linkedList2 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList2 = new SLinkedList<>();
         linkedList2.add(7);
         linkedList2.add(8);
         linkedList2.add(9);
         linkedList2.add(10);
 
-        RLinkedList<Integer> integerRLinkedList1 = linkedList1.intersection(linkedList2);
+        SLinkedList<Integer> integerRLinkedList1 = linkedList1.intersection(linkedList2);
         Assert.assertEquals(8, integerRLinkedList1.size());
         System.out.println(Arrays.toString(integerRLinkedList1.toArray()));
 
-        RLinkedList<Integer> integerRLinkedList2 = linkedList2.intersection(linkedList1);
+        SLinkedList<Integer> integerRLinkedList2 = linkedList2.intersection(linkedList1);
         Assert.assertEquals(8, integerRLinkedList2.size());
         System.out.println(Arrays.toString(integerRLinkedList2.toArray()));
 
-        RLinkedList<Integer> linkedList3 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList3 = new SLinkedList<>();
         linkedList3.add(1);
         linkedList3.add(2);
         linkedList3.add(4);
@@ -491,7 +491,7 @@ public class RLinkedListTest {
         linkedList3.add(16);
         linkedList3.add(17);
 
-        RLinkedList<Integer> linkedList4 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList4 = new SLinkedList<>();
         linkedList4.add(1);
         linkedList4.add(3);
         linkedList4.add(7);
@@ -500,11 +500,11 @@ public class RLinkedListTest {
         linkedList4.add(10);
         linkedList4.add(17);
 
-        RLinkedList<Integer> integerRLinkedList3 = linkedList3.intersection(linkedList4);
+        SLinkedList<Integer> integerRLinkedList3 = linkedList3.intersection(linkedList4);
         Assert.assertEquals(11, integerRLinkedList3.size());
         System.out.println(Arrays.toString(integerRLinkedList3.toArray()));
 
-        RLinkedList<Integer> integerRLinkedList4 = linkedList4.intersection(linkedList3);
+        SLinkedList<Integer> integerRLinkedList4 = linkedList4.intersection(linkedList3);
         Assert.assertEquals(11, integerRLinkedList4.size());
         System.out.println(Arrays.toString(integerRLinkedList4.toArray()));
     }
@@ -517,14 +517,14 @@ public class RLinkedListTest {
     @Test
     public void getMiddle() {
 
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(1);
         linkedList1.add(2);
         linkedList1.add(4);
         linkedList1.add(5);
         Assert.assertEquals(4,linkedList1.getMiddle().intValue());
 
-        RLinkedList<Integer> linkedList2 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList2 = new SLinkedList<>();
         linkedList2.add(6);
         linkedList2.add(7);
         linkedList2.add(8);
@@ -538,7 +538,7 @@ public class RLinkedListTest {
      */
     @Test
     public void isPalindrome() {
-        RLinkedList<Integer> linkedList1 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList1 = new SLinkedList<>();
         linkedList1.add(1);
         linkedList1.add(2);
         linkedList1.add(2);
@@ -547,7 +547,7 @@ public class RLinkedListTest {
         Assert.assertTrue(linkedList1.isPalindrome());
         System.out.println(Arrays.toString(linkedList1.toArray()));
 
-        RLinkedList<Integer> linkedList2 = new RLinkedList<>();
+        SLinkedList<Integer> linkedList2 = new SLinkedList<>();
         linkedList2.add(1);
         linkedList2.add(2);
         linkedList2.add(3);
