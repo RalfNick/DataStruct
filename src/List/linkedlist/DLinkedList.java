@@ -151,9 +151,9 @@ public class DLinkedList<T> implements RList<T> {
             first = null;
         } else {
             last.next = null;
-            l.prev = null;
-            l.item = null;
         }
+        l.prev = null;
+        l.item = null;
         size--;
         return result;
     }
