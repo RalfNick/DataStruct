@@ -72,6 +72,19 @@ public class CircleQueue<T> implements Queue<T> {
         return (rear + 1) % elements.length == front;
     }
 
+    @Override
+    public String toString() {
+        if (isEmpty()) return "[]";
+        else {
+            StringBuilder builder = new StringBuilder();
+            builder.append("[");
+            for (Object o : elements) {
+                builder.append(o.toString()).append(",");
+            }
+            return builder.substring(0, builder.length() - 1) + "]";
+        }
+    }
+
     private void checkQueue() {
         if (elements == null || elements.length < 1) {
             throw new NullPointerException("Queue is null!");
