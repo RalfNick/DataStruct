@@ -1,4 +1,4 @@
-package List.linkedlist;
+package list.linkedlist;
 
 /**
  * DESCRIPTION

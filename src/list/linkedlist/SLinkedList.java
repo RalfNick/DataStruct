@@ -1,7 +1,7 @@
-package List.linkedlist;
+package list.linkedlist;
 
-import List.RIterator;
-import List.RList;
+import list.RIterator;
+import list.RList;
 
 /**
  * DESCRIPTION

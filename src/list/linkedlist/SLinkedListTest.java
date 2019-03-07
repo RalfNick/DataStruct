@@ -1,6 +1,6 @@
-package List.linkedlist;
+package list.linkedlist;
 
-import List.RIterator;
+import list.RIterator;
 import org.junit.Assert;
 import org.junit.Test;
 

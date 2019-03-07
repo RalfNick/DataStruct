@@ -29,7 +29,7 @@ public class Josephus {
         for (int i = 0; i < n; i++) {
             circleQueue.enQueque(i);
         }
-        while (!circleQueue.isEmpty()){
+        while (!circleQueue.isEmpty()) {
             for (int i = 0; i < m - 1; i++) {
                 circleQueue.enQueque(circleQueue.deQueue());
             }

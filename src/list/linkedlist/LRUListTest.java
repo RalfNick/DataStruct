@@ -1,4 +1,4 @@
-package List.linkedlist;
+package list.linkedlist;
 
 import org.junit.Assert;
 import org.junit.Test;

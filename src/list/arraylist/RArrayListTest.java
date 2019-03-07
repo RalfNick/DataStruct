@@ -1,7 +1,7 @@
-package List.arraylist;
+package list.arraylist;
 
-import List.RIterator;
-import List.RList;
+import list.RIterator;
+import list.RList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

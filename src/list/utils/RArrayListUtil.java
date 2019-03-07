@@ -1,7 +1,7 @@
-package List.utils;
+package list.utils;
 
-import List.RList;
-import List.arraylist.RArrayList;
+import list.RList;
+import list.arraylist.RArrayList;
 
 /**
  * DESCRIPTION
