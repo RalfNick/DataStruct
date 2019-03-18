@@ -182,4 +182,46 @@ public class Sort {
         }
     }
 
+    /**
+     * 计数排序
+     *
+     * @param arr 数组
+     */
+    public static int[] countSort(int[] arr) {
+        if (arr == null) {
+            return null;
+        }
+        int max = arr[0];
+        int min = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+        }
+
+        // 创建统计数组，并对每个数据进行计数
+        int d = max - min;
+        int[] countArr = new int[d + 1];
+        for (int i = 0; i < arr.length; i++) {
+            countArr[arr[i] - min]++;
+        }
+
+        // 对统计数组累计求和
+        int sum = 0;
+        for (int i = 0; i < countArr.length; i++) {
+            sum += countArr[i];
+            countArr[i] = sum;
+        }
+
+        int[] sortArr = new int[arr.length];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            sortArr[countArr[arr[i] - min] - 1] = arr[i];
+            countArr[arr[i] - min]--;
+        }
+        return sortArr;
+    }
+
 }

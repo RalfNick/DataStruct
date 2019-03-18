@@ -56,4 +56,12 @@ public class SortTest {
         Sort.bucketSort(array, 10);
         System.out.println(Arrays.toString(array));
     }
+
+    @Test
+    public void countSort(){
+        int[] array = new int[]{95, 94, 91, 98, 99, 90, 99, 93, 91, 92};
+        int[] result = new int[]{90, 91, 91, 92, 93, 94, 95, 98, 99, 99};
+        int[] countSort = Sort.countSort(array);
+        Assert.assertArrayEquals(result,countSort);
+    }
 }
