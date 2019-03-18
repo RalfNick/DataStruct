@@ -45,13 +45,13 @@ public class BinarySearchTreeTest {
 //        Assert.assertFalse( binarySearchTree.contains(7));
 //        Assert.assertTrue( binarySearchTree.remove(6));
 //        Assert.assertFalse( binarySearchTree.contains(6));
-        Assert.assertTrue( binarySearchTree.remove(3));
-        Assert.assertFalse( binarySearchTree.contains(3));
+        Assert.assertTrue(binarySearchTree.remove(3));
+        Assert.assertFalse(binarySearchTree.contains(3));
     }
 
     @Test
     public void findMin() {
-        Assert.assertEquals(1,binarySearchTree.findMin().intValue());
+        Assert.assertEquals(1, binarySearchTree.findMin().intValue());
     }
 
     @Test
