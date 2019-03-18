@@ -1,5 +1,10 @@
 package algorithm.sort;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * DESCRIPTION
  *
@@ -127,4 +132,54 @@ public class Sort {
         arr[i] = pivot;
         return i;
     }
+
+    /**
+     * 一个长度为 n 的 double 类型数组，取值为 0 - 10，要求快速将这 20 个 double 元素从小到大排序
+     *
+     * @param arr       double 数组
+     * @param bucketNum 桶的数量
+     */
+    public static void bucketSort(double[] arr, int bucketNum) {
+        if (arr == null) {
+            return;
+        }
+        double max = arr[0];
+        double min = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+        }
+        // 间隔
+        double d = max - min;
+
+        // 创建桶
+        List<LinkedList<Double>> bucketList = new ArrayList<>();
+        for (int i = 0; i < bucketNum; i++) {
+            bucketList.add(new LinkedList<>());
+        }
+
+        // 将数据放入桶中
+        for (int i = 0; i < arr.length; i++) {
+            int index = (int) ((arr[i] - min) / d * (bucketNum - 1));
+            bucketList.get(index).add(arr[i]);
+        }
+
+        // 对每个桶排序
+        for (LinkedList<Double> linkedList : bucketList) {
+            Collections.sort(linkedList);
+        }
+
+        // 输出数据
+        int i = 0;
+        for (LinkedList<Double> linkedList : bucketList) {
+            for (Double number : linkedList) {
+                arr[i++] = number;
+            }
+        }
+    }
+
 }
