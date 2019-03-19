@@ -58,10 +58,17 @@ public class SortTest {
     }
 
     @Test
-    public void countSort(){
+    public void countSort() {
         int[] array = new int[]{95, 94, 91, 98, 99, 90, 99, 93, 91, 92};
         int[] result = new int[]{90, 91, 91, 92, 93, 94, 95, 98, 99, 99};
         int[] countSort = Sort.countSort(array);
-        Assert.assertArrayEquals(result,countSort);
+        Assert.assertArrayEquals(result, countSort);
+    }
+
+    @Test
+    public void mergeSort(){
+        int []arr = {9,8,7,6,5,4,3,2,1};
+        Sort.mergeSort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 }
