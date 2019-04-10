@@ -56,6 +56,13 @@ public class Heap {
         return result;
     }
 
+    /**
+     * 下沉
+     *
+     * @param arr  数组
+     * @param size 数组大小
+     * @param i    索引
+     */
     private static void downAdjust(int[] arr, int size, int i) {
         int temp = arr[i];
         int parentIndex = i;
@@ -75,12 +82,24 @@ public class Heap {
         arr[parentIndex] = temp;
     }
 
+    /**
+     * 构建堆
+     *
+     * @param arr    数组
+     * @param length 长度
+     */
     private static void buildHeap(int[] arr, int length) {
         for (int i = (length - 2) / 2; i >= 0; i--) {
             downAdjust(arr, length, i);
         }
     }
 
+    /**
+     * 堆排序
+     *
+     * @param arr 数组
+     * @param n   n为数组长度
+     */
     public static void sort(int[] arr, int n) {
         if (arr == null) {
             return;
