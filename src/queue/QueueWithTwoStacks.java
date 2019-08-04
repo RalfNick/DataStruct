@@ -44,6 +44,9 @@ public class QueueWithTwoStacks<E> implements Queue<E> {
         if (size() < 1) {
             return null;
         }
+        if (!stack2.isEmpty()){
+            return stack2.pop();
+        }
         transStacks();
         return stack2.pop();
     }
@@ -52,6 +55,9 @@ public class QueueWithTwoStacks<E> implements Queue<E> {
     public E peek() {
         if (size() < 1) {
             return null;
+        }
+        if (!stack2.isEmpty()){
+            return stack2.peek();
         }
         transStacks();
         return stack2.peek();

@@ -27,9 +27,9 @@ public class PriorityQueue {
         upAdjust();
     }
 
-    public int deQueue() throws Exception {
+    public int deQueue() {
         if (size <= 0) {
-            throw new Exception("the queue is empty!");
+            throw new NullPointerException("the queue is empty!");
         }
         int result = arr[0];
         arr[0] = arr[--size];

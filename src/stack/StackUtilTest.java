@@ -19,6 +19,7 @@ public class StackUtilTest {
             stack.push(i);
         }
         StackUtil.reverse(stack);
+//        StackUtil.reverse2(stack);
 
         Assert.assertTrue(!stack.isEmpty());
         System.out.println(stack);

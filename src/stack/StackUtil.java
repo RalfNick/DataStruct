@@ -35,6 +35,38 @@ public class StackUtil {
 //        }
     }
 
+    public static <T> void reverse1(RStack<T> stack) {
+        if (checkStackNull(stack)) return;
+        RStack<T> stack1 = new RStack<>(stack.size());
+        while (!stack.isEmpty()) {
+            stack1.push(stack.pop());
+        }
+        stack = stack1;
+    }
+
+    public static <T> void reverse2(RStack<T> stack) {
+        if (checkStackNull(stack)) return;
+        RStack<T> stack1 = new RStack<>(stack.size());
+        while (!stack.isEmpty()) {
+            stack1.push(stack.pop());
+        }
+        while (!stack1.isEmpty()) {
+            T top = stack1.pop();
+            addToBottom(stack, top);
+        }
+    }
+
+    private static <T> void addToBottom(RStack<T> stack, T t) {
+        if (stack.isEmpty()) {
+            stack.push(t);
+        } else {
+            T top = stack.pop();
+            addToBottom(stack, t);
+            stack.push(top);
+        }
+    }
+
+
     private static <T> boolean checkStackNull(RStack<T> stack) {
         if (stack == null || stack.size() < 1) {
             return true;

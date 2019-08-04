@@ -113,7 +113,7 @@ public class RArrayList<T> implements RList<T> {
         checkIndex(index);
         ensureCapacity();
         for (int i = count; i > index; i--) {
-            items[i] = items[i-1];
+            items[i] = items[i - 1];
         }
         items[index] = element;
         count++;
