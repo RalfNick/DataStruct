@@ -46,4 +46,12 @@ public class RQueueTest {
         Assert.assertEquals(7, result.get(2).get(1).intValue());
 
     }
+
+    @Test
+    public void testLeastInterval() {
+        // tasks = ["A","A","A","B","B","B"], n = 2
+        String[] tasks = {"A", "A", "A", "B", "B", "B"};
+        int result = RQueue.leastInterval(tasks, 2);
+        Assert.assertEquals(8, result);
+    }
 }
