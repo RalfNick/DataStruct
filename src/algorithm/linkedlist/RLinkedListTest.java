@@ -11,6 +11,19 @@ import org.junit.Test;
  **/
 public class RLinkedListTest {
 
+    private RLinkedList.ListNode initLinkedList() {
+        RLinkedList.ListNode node1 = new RLinkedList.ListNode(1);
+        RLinkedList.ListNode node2 = new RLinkedList.ListNode(2);
+        RLinkedList.ListNode node3 = new RLinkedList.ListNode(3);
+        RLinkedList.ListNode node4 = new RLinkedList.ListNode(4);
+        RLinkedList.ListNode node5 = new RLinkedList.ListNode(5);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        return node1;
+    }
+
     @Test
     public void swapPairs1() {
         RLinkedList.ListNode node1 = new RLinkedList.ListNode(1);
@@ -63,16 +76,47 @@ public class RLinkedListTest {
     }
 
     @Test
+    public void testReverseKGroup() {
+        RLinkedList.ListNode node1 = initLinkedList();
+
+        RLinkedList.ListNode node = RLinkedList.reverseKGroup(node1, 2);
+        Assert.assertEquals(2, node.val);
+        Assert.assertEquals(1, node.next.val);
+        Assert.assertEquals(4, node.next.next.val);
+        Assert.assertEquals(3, node.next.next.next.val);
+        Assert.assertEquals(5, node.next.next.next.next.val);
+
+        node1 = initLinkedList();
+        node = RLinkedList.reverseKGroup(node1, 3);
+        Assert.assertEquals(3, node.val);
+        Assert.assertEquals(2, node.next.val);
+        Assert.assertEquals(1, node.next.next.val);
+        Assert.assertEquals(4, node.next.next.next.val);
+        Assert.assertEquals(5, node.next.next.next.next.val);
+    }
+
+    @Test
+    public void testReverseKGroupII() {
+        RLinkedList.ListNode node1 = initLinkedList();
+        RLinkedList.ListNode node = RLinkedList.reverseKGroupII(node1, 2);
+        Assert.assertEquals(1, node.val);
+        Assert.assertEquals(3, node.next.val);
+        Assert.assertEquals(2, node.next.next.val);
+        Assert.assertEquals(5, node.next.next.next.val);
+        Assert.assertEquals(4, node.next.next.next.next.val);
+
+        node1 = initLinkedList();
+        node = RLinkedList.reverseKGroupII(node1, 3);
+        Assert.assertEquals(1, node.val);
+        Assert.assertEquals(2, node.next.val);
+        Assert.assertEquals(5, node.next.next.val);
+        Assert.assertEquals(4, node.next.next.next.val);
+        Assert.assertEquals(3, node.next.next.next.next.val);
+    }
+
+    @Test
     public void testRemoveNthFromEnd() {
-        RLinkedList.ListNode node1 = new RLinkedList.ListNode(1);
-        RLinkedList.ListNode node2 = new RLinkedList.ListNode(2);
-        RLinkedList.ListNode node3 = new RLinkedList.ListNode(3);
-        RLinkedList.ListNode node4 = new RLinkedList.ListNode(4);
-        RLinkedList.ListNode node5 = new RLinkedList.ListNode(5);
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
+        RLinkedList.ListNode node1 = initLinkedList();
 
 //        RLinkedList.ListNode newNode = RLinkedList.removeNthFromEnd(node1,2);
 
@@ -109,15 +153,7 @@ public class RLinkedListTest {
 
     @Test
     public void testRotateRight() {
-        RLinkedList.ListNode node1 = new RLinkedList.ListNode(1);
-        RLinkedList.ListNode node2 = new RLinkedList.ListNode(2);
-        RLinkedList.ListNode node3 = new RLinkedList.ListNode(3);
-        RLinkedList.ListNode node4 = new RLinkedList.ListNode(4);
-        RLinkedList.ListNode node5 = new RLinkedList.ListNode(5);
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
+        RLinkedList.ListNode node1 = initLinkedList();
 
         RLinkedList.ListNode node = RLinkedList.rotateRight(node1, 2);
 
@@ -218,15 +254,7 @@ public class RLinkedListTest {
 
     @Test
     public void testReverseList2() {
-        RLinkedList.ListNode node1 = new RLinkedList.ListNode(1);
-        RLinkedList.ListNode node2 = new RLinkedList.ListNode(2);
-        RLinkedList.ListNode node3 = new RLinkedList.ListNode(3);
-        RLinkedList.ListNode node4 = new RLinkedList.ListNode(4);
-        RLinkedList.ListNode node5 = new RLinkedList.ListNode(5);
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
+        RLinkedList.ListNode node1 = initLinkedList();
 
         RLinkedList.ListNode node = RLinkedList.reverseList2(node1, 2, 4);
         Assert.assertEquals(1, node.val);
@@ -452,15 +480,7 @@ public class RLinkedListTest {
     public void testOddEvenList() {
         // 1->2->3->4->5->NULL
         // 1->3->5->2->4->NULL
-        RLinkedList.ListNode node1 = new RLinkedList.ListNode(1);
-        RLinkedList.ListNode node2 = new RLinkedList.ListNode(2);
-        RLinkedList.ListNode node3 = new RLinkedList.ListNode(3);
-        RLinkedList.ListNode node4 = new RLinkedList.ListNode(4);
-        RLinkedList.ListNode node5 = new RLinkedList.ListNode(5);
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
+        RLinkedList.ListNode node1 = initLinkedList();
 
         RLinkedList.ListNode node = RLinkedList.oddEvenList(node1);
         Assert.assertEquals(1, node.val);

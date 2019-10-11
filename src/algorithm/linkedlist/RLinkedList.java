@@ -249,6 +249,7 @@ public class RLinkedList {
     }
 
     /**
+     * K 个一组翻转链表 - 25
      * 给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。
      * k 是一个正整数，它的值小于或等于链表的长度。
      * 如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。
@@ -256,7 +257,78 @@ public class RLinkedList {
      * @return
      */
     public static ListNode reverseKGroup(ListNode head, int k) {
-        return null;
+        if (head == null) {
+            return null;
+        }
+        int length = 0;
+        ListNode temp = head;
+        while (temp != null) {
+            length++;
+            temp = temp.next;
+        }
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode start = pre.next;
+        ListNode then = start.next;
+        for (int i = 0; i < length / k; i++) {
+            for (int j = 0; j < k - 1; j++) {
+                start.next = then.next;
+                then.next = pre.next;
+                pre.next = then;
+                then = start.next;
+            }
+            pre = start;
+            start = pre.next;
+            then = start.next;
+        }
+        return dummy.next;
+    }
+
+    /**
+     * K 个一组翻转链表 II
+     * 给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。从后面开始翻转
+     * 给定这个链表：1->2->3->4->5
+     * 当 k = 2 时，应当返回: 1->3->2->5->4
+     * 当 k = 3 时，应当返回: 1->2->5->4->3
+     * k 是一个正整数，它的值小于或等于链表的长度。
+     * 如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。
+     *
+     * @return
+     */
+    public static ListNode reverseKGroupII(ListNode head, int k) {
+        if (head == null) {
+            return null;
+        }
+        int len = 0;
+        ListNode temp = head;
+        while (temp != null) {
+            len++;
+            temp = temp.next;
+        }
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        for (int i = 0; i < len % k; i++) {
+            pre = pre.next;
+        }
+        ListNode start = pre.next;
+        ListNode then = start.next;
+        for (int i = 0; i < len / k; i++) {
+            for (int j = 0; j < k - 1; j++) {
+                start.next = then.next;
+                then.next = pre.next;
+                pre.next = then;
+                then = start.next;
+            }
+            pre = start;
+            start = pre.next;
+            if (start == null) {
+                break;
+            }
+            then = start.next;
+        }
+        return dummy.next;
     }
 
     /**
@@ -813,11 +885,10 @@ public class RLinkedList {
             return null;
         }
         ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
         ListNode pre = dummyNode;
         for (int i = 0; i < m - 1; i++) {
-            pre.next = head;
-            pre = head;
-            head = head.next;
+            pre = pre.next;
         }
         ListNode start = pre.next;
         ListNode then = start.next;

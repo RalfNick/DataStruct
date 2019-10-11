@@ -47,6 +47,33 @@ public class Sort {
     }
 
     /**
+     * 冒泡优化，已经有序，就不结束排序
+     *
+     * @param arr 数组
+     */
+    public static void bubbleSort1(int[] arr) {
+        if (arr == null) {
+            return;
+        }
+        int border = arr.length - 1;
+        int lastIndex = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            boolean sorted = true;
+            for (int j = 0; j < border; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                    sorted = false;
+                    lastIndex = j;
+                }
+            }
+            border = lastIndex;
+            if (sorted) {
+                break;
+            }
+        }
+    }
+
+    /**
      * 插入排序
      * 要点：像扑克牌一样，小牌放在左边，插入的牌比左边的某张牌大（左边的牌已经排好大小），
      * 该张牌后面的牌依次向右移动一个位置
@@ -276,7 +303,7 @@ public class Sort {
             System.arraycopy(arr, j, temp, t, right - j + 1);
             t += right - j;
         }
-        if (left <= right){
+        if (left <= right) {
             System.arraycopy(temp, 0, arr, left, t + 1);
         }
     }

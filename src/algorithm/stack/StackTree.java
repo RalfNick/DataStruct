@@ -72,16 +72,15 @@ public class StackTree {
                 return;
             }
             Stack<TreeNode> stack = new Stack<>();
-            while (!stack.isEmpty() || root != null) {
-                while (root != null) {
-                    stack.push(root);
-                    root = root.right;
+            TreeNode cur = root;
+            while (!stack.isEmpty() || cur != null) {
+                while (cur != null) {
+                    stack.push(cur);
+                    cur = cur.right;
                 }
-                TreeNode node = stack.pop();
-                mIteratorStack.push(node.val);
-                if (node.left != null) {
-                    stack.push(node.left);
-                }
+                cur = stack.pop();
+                mIteratorStack.push(cur.val);
+                cur = cur.left;
             }
         }
 

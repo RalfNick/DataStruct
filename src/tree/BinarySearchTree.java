@@ -84,8 +84,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
                 Node<T> node = findMin(root.right);
                 root.data = node.data;
                 root.right = remove(root.right, node.data);
+            } else {
+                root = root.left == null ? root.right : root.left;
             }
-            root = root.left == null ? root.right : root.left;
         } else if (result > 0) {
             root.left = remove(root.left, value);
         } else {
@@ -128,6 +129,45 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
             return findMin(root.left);
         }
         return root;
+    }
+
+    public boolean removeItertation(T value) {
+        if (value == null) {
+            return false;
+        }
+        // 删除节点的父节点
+        Node<T> pp = null;
+        // 删除节点
+        Node<T> p = root;
+        while (value.compareTo(p.data) != 0) {
+            pp = p;
+            p = value.compareTo(p.data) > 0 ? p.right : p.left;
+            if (p == null) {
+                return false;
+            }
+        }
+        if (p.left != null && p.right != null) {
+            // 右子树删除节点的父节点
+            Node<T> minPP = p;
+            // 右子树删除节点
+            Node<T> minP = p.right;
+            while (minP.left != null) {
+                minPP = minP;
+                minP = minP.left;
+            }
+            p.data = minP.data;
+            pp = minPP;
+            p = minP;
+        }
+        Node<T> child = p.left != null ? p.left : p.right;
+        if (pp == null) {
+            root = child;
+        } else if (pp.left == p) {
+            pp.left = child;
+        } else {
+            pp.right = child;
+        }
+        return true;
     }
 
 }
