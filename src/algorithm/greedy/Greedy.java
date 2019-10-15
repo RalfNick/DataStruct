@@ -148,7 +148,7 @@ public class Greedy {
         int oil = gas[index];
         while (oil >= cost[next]) {
             int last = next;
-            next = next == len ? 0 : next + 1;
+            next = next == len - 1 ? 0 : next + 1;
             if (next == index) {
                 return true;
             }
@@ -262,6 +262,7 @@ public class Greedy {
 
     /**
      * 无重叠区间 - 435
+     * 给定一个区间的集合，找到需要移除区间的最小数量，使剩余区间互不重叠。
      *
      * @param intervals 区间数组
      * @return
@@ -319,10 +320,10 @@ public class Greedy {
             return 0;
         }
         class Task {
-            int value;
-            char name;
+            private int value;
+            private char name;
 
-            public Task(int value, char name) {
+            private Task(int value, char name) {
                 this.value = value;
                 this.name = name;
             }

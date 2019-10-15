@@ -682,10 +682,9 @@ public class RTree {
         if (root == null) {
             return;
         }
-        List<Integer> temp = new ArrayList<>();
-        paths(root, list, sum, temp);
-        pathSum3(root.left, list, sum);
-        pathSum3(root.right, list, sum);
+        paths(root, list, sum, new ArrayList<>());
+        paths(root.left, list, sum, new ArrayList<>());
+        paths(root.right, list, sum, new ArrayList<>());
     }
 
     private static void paths(TreeNode root, List<List<Integer>> list, int sum, List<Integer> temp) {
@@ -975,7 +974,7 @@ public class RTree {
         }
         TreeNode l = lowestCommonAncestor1(root.left, p, q);
         TreeNode r = lowestCommonAncestor1(root.right, p, q);
-        if (l != null && r.right != null) {
+        if (l != null && r != null) {
             return root;
         }
         return l != null ? l : r;
@@ -1254,8 +1253,9 @@ public class RTree {
             }
             getMode(root.left);
             if (pre == null || pre != root.val) {
-                pre = root.val;
                 curCount = 1;
+            } else {
+                curCount++;
             }
             if (curCount > maxCount) {
                 mList.clear();
@@ -1265,6 +1265,7 @@ public class RTree {
                 mList.add(root.val);
                 curCount++;
             }
+            pre = root.val;
             getMode(root.right);
         }
     }
