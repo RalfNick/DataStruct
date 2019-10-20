@@ -89,4 +89,37 @@ public class DynamicPlanTest {
         Assert.assertEquals(0, DynamicPlan.maxProfit6(new int[]{7, 6, 4, 3, 1}));
         Assert.assertEquals(0, DynamicPlan.maxProfit55(new int[]{7, 6, 4, 3, 1}, 2));
     }
+
+    @Test
+    public void testLengthOfLIS() {
+        int[] arr = {10, 9, 2, 5, 3, 7, 101, 18};
+        Assert.assertEquals(4, DynamicPlan.lengthOfLIS(arr));
+    }
+
+    @Test
+    public void testMiniCoin() {
+        int[] coins = {1, 3, 5};
+        Assert.assertEquals(3, DynamicPlan.miniCoin(coins, 11));
+        Assert.assertEquals(3, DynamicPlan.miniCoin(coins, 9));
+        Assert.assertEquals(3, DynamicPlan.miniCoin2(coins, 11));
+        Assert.assertEquals(3, DynamicPlan.miniCoin2(coins, 9));
+    }
+
+    @Test
+    public void testMinPathSum() {
+        int[][] grid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
+        Assert.assertEquals(7, DynamicPlan.minPathSum(grid));
+    }
+
+    @Test
+    public void testUniquePaths() {
+        Assert.assertEquals(3, DynamicPlan.uniquePaths(3, 2));
+        Assert.assertEquals(28, DynamicPlan.uniquePaths(7, 3));
+    }
+
+    @Test
+    public void testUniquePathsWithObstacles() {
+        int[][] arr = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+        Assert.assertEquals(2, DynamicPlan.uniquePathsWithObstacles(arr));
+    }
 }
