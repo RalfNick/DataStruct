@@ -448,6 +448,32 @@ public class DynamicPlan {
      * @return
      */
     public static String longestPalindrome(String s) {
-        return "";
+        if (s == null || s.length() < 1) {
+            return "";
+        }
+        int maxLen = 0;
+        int maxEnd = 0;
+        String result;
+        String reverse = new StringBuilder(s).reverse().toString();
+        int[][] tab = new int[s.length()][s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j < s.length(); j++) {
+                if (s.charAt(i) == reverse.charAt(j)) {
+                    if (i == 0 || j == 0) {
+                        tab[i][j] = 1;
+                    } else {
+                        if (tab[i][j] > maxLen) {
+                            int before = reverse.length() - j - i;
+                            if (before + tab[i][j] - 1 == i) {
+                                maxEnd = i;
+                                maxLen = tab[i][j];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        result = s.substring(maxEnd - maxLen + 1, maxEnd + 1);
+        return result;
     }
 }

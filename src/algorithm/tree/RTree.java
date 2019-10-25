@@ -531,7 +531,7 @@ public class RTree {
         TreeNode root = new TreeNode(postOrder[postEnd]);
         int index = getIndex(inOrder, postOrder[postEnd]);
         root.right = getNode1(postOrder, inOrder, postEnd - 1, index + 1, inEnd);
-        root.left = getNode1(postOrder, inOrder, postEnd - inOrder.length + index, inStart, index);
+        root.left = getNode1(postOrder, inOrder, postEnd - (inEnd - index), inStart, index);
         return root;
     }
 
