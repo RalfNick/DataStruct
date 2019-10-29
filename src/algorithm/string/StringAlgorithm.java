@@ -60,4 +60,27 @@ public class StringAlgorithm {
         String str = "This is racecar and madam, but the number is 121";
         System.out.println(findLongestPalindrome(str));
     }
+
+    public static int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() < 1) {
+            return 0;
+        }
+        if (s.length() == 1) {
+            return 1;
+        }
+        int start = 0;
+        int maxLen = 1;
+        for (int i = 1; i < s.length();) {
+            for (int j = start; j < i; j++) {
+                if (s.charAt(j) == s.charAt(i)) {
+                    start++;
+                    i = start;
+                    break;
+                }
+            }
+            maxLen = Math.max(maxLen, i - start + 1);
+            i++;
+        }
+        return maxLen;
+    }
 }

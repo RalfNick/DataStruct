@@ -462,12 +462,13 @@ public class DynamicPlan {
                     if (i == 0 || j == 0) {
                         tab[i][j] = 1;
                     } else {
-                        if (tab[i][j] > maxLen) {
-                            int before = reverse.length() - j - i;
-                            if (before + tab[i][j] - 1 == i) {
-                                maxEnd = i;
-                                maxLen = tab[i][j];
-                            }
+                        tab[i][j] = tab[i - 1][j - 1] + 1;
+                    }
+                    if (tab[i][j] > maxLen) {
+                        int before = reverse.length() - j - 1;
+                        if (before + tab[i][j] - 1 == i) {
+                            maxEnd = i;
+                            maxLen = tab[i][j];
                         }
                     }
                 }

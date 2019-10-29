@@ -666,17 +666,23 @@ public class RLinkedList {
             return head;
         }
         ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
         ListNode sortedNode;
         ListNode waitSortNode = head;
         while (waitSortNode != null) {
             ListNode temp = waitSortNode.next;
             sortedNode = dummyNode;
-            while (sortedNode.next != null && sortedNode.next.val < waitSortNode.val) {
-                sortedNode = sortedNode.next;
+            if (temp != null && temp.val < waitSortNode.val) {
+                while (sortedNode.next != null && sortedNode.next.val < temp.val) {
+                    sortedNode = sortedNode.next;
+                }
+                ListNode pre = sortedNode.next;
+                sortedNode.next = temp;
+                waitSortNode.next = temp.next;
+                temp.next = pre;
+            } else {
+                waitSortNode = temp;
             }
-            waitSortNode.next = sortedNode.next;
-            sortedNode.next = waitSortNode;
-            waitSortNode = temp;
         }
         return dummyNode.next;
     }
