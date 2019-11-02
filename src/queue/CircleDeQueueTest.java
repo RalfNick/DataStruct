@@ -17,28 +17,28 @@ public class CircleDeQueueTest {
     @Before
     public void initQueue() {
         deQueue = new CircleDeQueue<>(5);
-        Assert.assertTrue(deQueue.enQueque(1));
-        Assert.assertTrue(deQueue.enQueque(2));
-        Assert.assertTrue(deQueue.enQueque(3));
-        Assert.assertTrue(deQueue.enQueque(4));
-        Assert.assertTrue(deQueue.enQueque(5));
+        Assert.assertTrue(deQueue.enQueue(1));
+        Assert.assertTrue(deQueue.enQueue(2));
+        Assert.assertTrue(deQueue.enQueue(3));
+        Assert.assertTrue(deQueue.enQueue(4));
+        Assert.assertTrue(deQueue.enQueue(5));
     }
 
     @Test
     public void testEnqueue() {
         CircleDeQueue<Integer> deQueue = new CircleDeQueue<>(5);
         Assert.assertEquals(0, deQueue.size());
-        Assert.assertTrue(deQueue.enQueque(1));
+        Assert.assertTrue(deQueue.enQueue(1));
         Assert.assertEquals(1, deQueue.size());
-        Assert.assertTrue(deQueue.enQueque(2));
+        Assert.assertTrue(deQueue.enQueue(2));
         Assert.assertEquals(2, deQueue.size());
-        Assert.assertTrue(deQueue.enQueque(3));
+        Assert.assertTrue(deQueue.enQueue(3));
         Assert.assertEquals(3, deQueue.size());
-        Assert.assertTrue(deQueue.enQueque(4));
+        Assert.assertTrue(deQueue.enQueue(4));
         Assert.assertEquals(4, deQueue.size());
-        Assert.assertTrue(deQueue.enQueque(5));
+        Assert.assertTrue(deQueue.enQueue(5));
         Assert.assertEquals(5, deQueue.size());
-        Assert.assertFalse(deQueue.enQueque(6));
+        Assert.assertFalse(deQueue.enQueue(6));
         Assert.assertEquals(5, deQueue.size());
     }
 

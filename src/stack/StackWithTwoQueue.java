@@ -35,11 +35,11 @@ public class StackWithTwoQueue<T> {
             return false;
         }
         if (queue1.isEmpty() && queue2.isEmpty()) {
-            return queue1.enQueque(t);
+            return queue1.enQueue(t);
         } else if (queue1.isEmpty()) {
-            return queue2.enQueque(t);
+            return queue2.enQueue(t);
         } else {
-            return queue1.enQueque(t);
+            return queue1.enQueue(t);
         }
     }
 
@@ -59,7 +59,7 @@ public class StackWithTwoQueue<T> {
     private void transQueue(Queue<T> enQueue, Queue<T> deQueue) {
         int size = deQueue.size();
         for (int i = 0; i < size - 1; i++) {
-            enQueue.enQueque(deQueue.deQueue());
+            enQueue.enQueue(deQueue.deQueue());
         }
     }
 
@@ -77,11 +77,11 @@ public class StackWithTwoQueue<T> {
         if (queue1.isEmpty()) {
             transQueue(queue1, queue2);
             result = queue2.deQueue();
-            queue1.enQueque(result);
+            queue1.enQueue(result);
         } else {
             transQueue(queue2, queue1);
             result = queue1.deQueue();
-            queue2.enQueque(result);
+            queue2.enQueue(result);
         }
 
         return result;

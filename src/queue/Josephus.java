@@ -27,11 +27,11 @@ public class Josephus {
             return resultList;
         }
         for (int i = 0; i < n; i++) {
-            circleQueue.enQueque(i);
+            circleQueue.enQueue(i);
         }
         while (!circleQueue.isEmpty()) {
             for (int i = 0; i < m - 1; i++) {
-                circleQueue.enQueque(circleQueue.deQueue());
+                circleQueue.enQueue(circleQueue.deQueue());
             }
             resultList.add(circleQueue.deQueue());
         }

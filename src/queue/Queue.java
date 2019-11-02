@@ -8,7 +8,7 @@ package queue;
  **/
 public interface Queue<E> {
 
-    boolean enQueque(E e);
+    boolean enQueue(E e);
 
     E deQueue();
 

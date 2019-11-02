@@ -18,7 +18,7 @@ public class CircleQueueTest {
         Assert.assertTrue(queue.isEmpty());
         Assert.assertEquals(0, queue.size());
         for (int i = 0; i < 10; i++) {
-            queue.enQueque(i);
+            queue.enQueue(i);
             Assert.assertFalse(queue.isEmpty());
             Assert.assertEquals(i + 1, queue.size());
         }
@@ -30,7 +30,7 @@ public class CircleQueueTest {
     public void testPoll() {
         CircleQueue<Integer> queue = new CircleQueue<>();
         for (int i = 0; i < 10; i++) {
-            queue.enQueque(i);
+            queue.enQueue(i);
         }
 
         for (int i = 0; i < 10; i++) {

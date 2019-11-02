@@ -31,7 +31,7 @@ public class QueueWithTwoStacks<E> implements Queue<E> {
     }
 
     @Override
-    public boolean enQueque(E e) {
+    public boolean enQueue(E e) {
         if (size() >= MAX_LENGTH || stack1.isFull()) {
             return false;
         }

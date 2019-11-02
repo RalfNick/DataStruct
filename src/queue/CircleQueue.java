@@ -25,7 +25,7 @@ public class CircleQueue<T> implements Queue<T> {
     }
 
     @Override
-    public boolean enQueque(T t) {
+    public boolean enQueue(T t) {
         checkQueue();
         if (isFull()) {
             return false;

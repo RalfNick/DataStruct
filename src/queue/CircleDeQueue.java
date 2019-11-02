@@ -40,7 +40,7 @@ public class CircleDeQueue<T> implements Queue<T> {
      * Adds an item at the rear of Deque. Return true if the operation is successful.
      */
     public boolean insertLast(T value) {
-        return enQueque(value);
+        return enQueue(value);
     }
 
     /**
@@ -98,7 +98,7 @@ public class CircleDeQueue<T> implements Queue<T> {
     }
 
     @Override
-    public boolean enQueque(T t) {
+    public boolean enQueue(T t) {
         if (isFull()) {
             return false;
         }

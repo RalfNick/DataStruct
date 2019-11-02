@@ -25,7 +25,7 @@ public class RArrayQueue<T> implements Queue<T> {
     }
 
     @Override
-    public boolean enQueque(T t) {
+    public boolean enQueue(T t) {
         if (isFull()) {
             return false;
         }
