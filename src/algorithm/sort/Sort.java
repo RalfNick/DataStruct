@@ -112,7 +112,9 @@ public class Sort {
                     min = j;
                 }
             }
-            swap(arr, min, i);
+            if (min != i) {
+                swap(arr, min, i);
+            }
         }
     }
 
@@ -124,7 +126,6 @@ public class Sort {
      * @param right 右边索引
      */
     public static void quickSort(int[] arr, int left, int right) {
-
         if (left > right) {
             return;
         }
@@ -205,6 +206,45 @@ public class Sort {
         for (LinkedList<Double> linkedList : bucketList) {
             for (Double number : linkedList) {
                 arr[i++] = number;
+            }
+        }
+    }
+
+    /**
+     * 桶排序 - 整数
+     *
+     * @param arr 数组
+     */
+    public static void bucketSort(int[] arr, int bucketSize) {
+        if (arr == null || arr.length < 2) {
+            return;
+        }
+        int min = arr[0];
+        int max = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+        }
+        int bucketCount = (max - min) / bucketSize + 1;
+        List<List<Integer>> bucketLists = new ArrayList<>(bucketCount);
+        for (int i = 0; i < bucketCount; i++) {
+            bucketLists.add(new ArrayList<>());
+        }
+        for (int anArr : arr) {
+            int index = (anArr - min) / bucketSize;
+            bucketLists.get(index).add(anArr);
+        }
+        int k = 0;
+        for (List<Integer> list : bucketLists) {
+            if (list.size() > 0) {
+                Collections.sort(list);
+                for (int item : list) {
+                    arr[k++] = item;
+                }
             }
         }
     }

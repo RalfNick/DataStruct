@@ -1,5 +1,8 @@
 package algorithm.string;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * DESCRIPTION
  *
@@ -70,7 +73,7 @@ public class StringAlgorithm {
         }
         int start = 0;
         int maxLen = 1;
-        for (int i = 1; i < s.length();) {
+        for (int i = 1; i < s.length(); ) {
             for (int j = start; j < i; j++) {
                 if (s.charAt(j) == s.charAt(i)) {
                     start++;
@@ -82,5 +85,25 @@ public class StringAlgorithm {
             i++;
         }
         return maxLen;
+    }
+
+    public static int lengthOfLongestSubstring1(String s) {
+        if (s == null || s.length() < 1) {
+            return 0;
+        }
+        if (s.length() == 1) {
+            return 1;
+        }
+        Set<Character> set = new HashSet<>();
+        int i = 0, j = 0, len = 0;
+        while (i < s.length() && j < s.length()) {
+            if (!set.contains(s.charAt(j))) {
+                set.add(s.charAt(j++));
+                len = Math.max(len, j - i);
+            } else {
+                set.remove(s.charAt(i++));
+            }
+        }
+        return len;
     }
 }

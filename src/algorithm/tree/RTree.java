@@ -290,15 +290,15 @@ public class RTree {
      * @return
      */
     public static boolean isBalanced(TreeNode node) {
-        return maxDeath2(node) != -1;
+        return maxDepth2(node) != -1;
     }
 
-    private static int maxDeath2(TreeNode node) {
+    private static int maxDepth2(TreeNode node) {
         if (node == null) {
             return 0;
         }
-        int left = maxDeath2(node.left);
-        int right = maxDeath2(node.right);
+        int left = maxDepth2(node.left);
+        int right = maxDepth2(node.right);
         if (left == -1 || right == -1 || Math.abs(left - right) > 1) {
             return -1;
         }

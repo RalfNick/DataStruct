@@ -16,7 +16,8 @@ public class SortTest {
     @Test
     public void bubble() {
         int a[] = {8, 6, 3, 2, 7, 4, 1, 5};
-        Sort.bubbleSort(a);
+//        Sort.bubbleSort(a);
+        Sort.bubbleSort1(a);
         for (int i = 0; i < 8; i++) {
             Assert.assertEquals(i + 1, a[i]);
         }
