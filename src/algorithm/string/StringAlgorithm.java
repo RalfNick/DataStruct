@@ -1,6 +1,8 @@
 package algorithm.string;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -105,5 +107,44 @@ public class StringAlgorithm {
             }
         }
         return len;
+    }
+
+    /**
+     * 方法一：求几个字符串的最长公共前缀
+     *
+     * @param strings 字符串数组
+     * @return 最长公共前缀
+     */
+    public static String longestCommonPrefix(String[] strings) {
+        if (strings == null || strings.length < 1) {
+            return "";
+        }
+        int size = strings[0].length();
+        for (String str : strings) {
+            size = Math.min(str.length(), size);
+        }
+        if (size < 1) {
+            return "";
+        }
+        int index = -1;
+        boolean isSame = true;
+        char ch;
+        for (int i = 0; i < size; i++) {
+            ch = strings[0].charAt(i);
+            for (int j = 1; j < strings.length; j++) {
+                if (strings[j].charAt(i) != ch) {
+                    isSame = false;
+                    break;
+                }
+            }
+            if (!isSame) {
+                break;
+            }
+            index = i;
+        }
+        if (index == -1) {
+            return "";
+        }
+        return strings[0].substring(0, index + 1);
     }
 }

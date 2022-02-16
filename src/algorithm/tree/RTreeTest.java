@@ -220,6 +220,21 @@ public class RTreeTest {
     }
 
     @Test
+    public void testSortedBST(){
+        RTree.TreeNode root1 = RTree.buildBstWithLevel(0);
+        List<List<Integer>> list1 = RTree.levelOrder(root1);
+        System.out.println(list1.toString());
+
+        RTree.TreeNode root2 = RTree.buildBstWithLevel(1);
+        List<List<Integer>> list2 = RTree.levelOrder(root2);
+        System.out.println(list2.toString());
+
+        RTree.TreeNode root3 = RTree.buildBstWithLevel(2);
+        List<List<Integer>> list3 = RTree.levelOrder(root3);
+        System.out.println(list3.toString());
+    }
+
+    @Test
     public void testHasPathSum() {
         RTree.TreeNode root = new RTree.TreeNode(5);
         RTree.TreeNode node2 = new RTree.TreeNode(4);

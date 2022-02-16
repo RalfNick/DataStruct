@@ -22,4 +22,15 @@ public class StringAlgorithmTest {
         Assert.assertEquals(3, StringAlgorithm.lengthOfLongestSubstring1("pwwkew"));
 
     }
+
+    @Test
+    public void testLongestCommonPrefix() {
+        String[] strings = {"flower", "flow", "flight"};
+        String result = StringAlgorithm.longestCommonPrefix(strings);
+        Assert.assertEquals(result,"fl");
+
+        String[] strings1 = {"dog", "racecar", "car"};
+        String result1 = StringAlgorithm.longestCommonPrefix(strings1);
+        Assert.assertEquals(result1,"");
+    }
 }

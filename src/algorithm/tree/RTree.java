@@ -1,5 +1,7 @@
 package algorithm.tree;
 
+import org.junit.Test;
+
 import java.util.*;
 
 /**
@@ -596,6 +598,30 @@ public class RTree {
             root.right = insert(root.right, value);
         }
         return root;
+    }
+
+    /**
+     * 根据一个层次构造二叉查找树 level >= 1
+     * 1  2^0  level=1
+     *
+     *   2    2^1 level=2
+     * 1   3
+     *
+     *     4     2^2  level=3
+     *   2   6
+     * 1  3 5  7
+     * @param level m层
+     */
+    public static TreeNode buildBstWithLevel(int level) {
+        if (level < 1) {
+            return null;
+        }
+        final int length = (int) Math.pow(2.0, level) - 1;
+        final int[] arr = new int[length];
+        for (int i = 0; i < length; i++) {
+            arr[i] = i + 1;
+        }
+        return sortedBST(arr);
     }
 
     public static TreeNode sortedBST(int[] nums) {

@@ -70,9 +70,11 @@ public class MergeTwoArray {
 
         for (int i = m + n - 1; i >= 0; i--) {
             if (x < 0) {
-                System.arraycopy(arr2, 0, arr1, 0, y + 1);
+                arr1[i] = arr2[y];
+                y--;
             } else if (y < 0) {
-                System.arraycopy(arr1, 0, arr1, 0, x + 1);
+                arr1[i] = arr1[x];
+                x--;
             } else {
                 if (arr1[x] >= arr2[y]) {
                     arr1[i] = arr1[x];
