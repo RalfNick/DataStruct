@@ -2,6 +2,10 @@ package algorithm.array.twosum;
 
 import algorithm.search.BinarySearch;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * DESCRIPTION
  *
@@ -19,10 +23,10 @@ public class TwoSum {
      * @return
      */
     public static int[] findTwoSumIndex1(int[] arr, int target) {
-
         if (arr == null || arr.length < 1) {
             throw new NullPointerException("arr is null");
         }
+        Arrays.sort(arr);
         int[] result = {-1, -1};
         for (int i = 0; i < arr.length - 1; i++) {
             if (arr[i] >= target) {
@@ -53,6 +57,7 @@ public class TwoSum {
         if (arr == null || arr.length < 1) {
             throw new NullPointerException("arr is null");
         }
+        Arrays.sort(arr);
         int[] result = {-1, -1};
         // 查找最后一个小于等于给定值的元素
         int lastIndex = BinarySearch.binarySearch4(arr, arr.length, target);
@@ -64,6 +69,23 @@ public class TwoSum {
                 result[1] = resultIndex;
                 break;
             }
+        }
+        return result;
+    }
+
+    public static int[] findTwoSumIndex3(int[] arr, int target) {
+        if (arr == null || arr.length < 1) {
+            throw new NullPointerException("arr is null or empty");
+        }
+        final int[] result = {-1, -1};
+        final Map<Integer, Integer> map = new HashMap<>();
+        final int length = arr.length;
+        for (int i = 0; i < length; i++) {
+            final int another = target - arr[i];
+            if (map.containsKey(another)) {
+                return new int[]{map.get(another), i};
+            }
+            map.put(arr[i], i);
         }
         return result;
     }
