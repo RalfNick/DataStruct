@@ -1,4 +1,4 @@
-package linkedlist;
+package com.ralf.linkedlist;
 
 import java.util.*;
 

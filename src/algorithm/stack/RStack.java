@@ -1,8 +1,16 @@
 package algorithm.stack;
 
-import util.StringUtil;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
 
-import java.util.*;
+import util.StringUtil;
 
 /**
  * DESCRIPTION
@@ -41,23 +49,23 @@ public class RStack {
             if (ch == '(' || ch == '[' || ch == '{') {
                 stack.push(ch);
             } else if (ch == ')') {
-                if (stack.peek() != '(') {
+                if (stack.isEmpty() || stack.peek() != '(') {
                     return false;
                 }
                 stack.pop();
             } else if (ch == ']') {
-                if (stack.peek() != '[') {
+                if (stack.isEmpty() || stack.peek() != '[') {
                     return false;
                 }
                 stack.pop();
             } else if (ch == '}') {
-                if (stack.peek() != '{') {
+                if (stack.isEmpty() || stack.peek() != '{') {
                     return false;
                 }
                 stack.pop();
             }
         }
-        return true;
+        return stack.isEmpty();
     }
 
     /**
@@ -126,7 +134,10 @@ public class RStack {
         if (heights == null || heights.length < 1) {
             return 0;
         }
-        Stack<Integer> stack = new Stack<>();
+        if (heights.length == 1) {
+            return heights[0];
+        }
+        Deque<Integer> stack = new ArrayDeque<>();
         int result = 0;
         for (int i = 0; i <= heights.length; i++) {
             int h = i == heights.length ? 0 : heights[i];
@@ -145,7 +156,10 @@ public class RStack {
         if (heights == null || heights.length < 1) {
             return 0;
         }
-        Stack<Integer> stack = new Stack<>();
+        if (heights.length == 1) {
+            return heights[0];
+        }
+        Deque<Integer> stack = new ArrayDeque<>();
         int result = 0;
         for (int i = 0; i <= heights.length; i++) {
             int h = i == heights.length ? 0 : heights[i];
@@ -274,7 +288,7 @@ public class RStack {
             }
             if (j > 0) {
                 int k = j - 1;
-                while (k > 0 && nums[k] >= nums[j]) {
+                while (k > 0 && nums[k] >= nums[i]) {
                     k--;
                 }
                 if (k >= 0) {
@@ -406,20 +420,25 @@ public class RStack {
     public static String removeKdigits(String num, int k) {
         if (num == null || num.length() < 1 || k == 0) {
             return num;
-        } else if (k >= num.length()) {
+        }
+        if (k >= num.length()) {
             return "0";
         }
-        char[] stack = new char[num.length() - k];
+        char[] chars = num.toCharArray();
+        char[] stack = new char[chars.length];
         int top = 0;
-        for (char ch : num.toCharArray()) {
+        for (char ch : chars) {
             while (top > 0 && k > 0 && stack[top - 1] > ch) {
-                top--;
                 k--;
+                top--;
             }
             stack[top++] = ch;
         }
+        for (int i = 0; i < k; i++) {
+            top--;
+        }
         int position = 0;
-        while (top > position && stack[position] == '0') {
+        while (position < top && stack[position] == '0') {
             position++;
         }
         return position == top ? "0" : new String(stack, position, top - position);

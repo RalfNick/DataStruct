@@ -1,6 +1,5 @@
-package linkedlist;
+package com.ralf.linkedlist;
 
-import algorithm.linkedlist.RLinkedList;
 import org.junit.Assert;
 import org.junit.Test;
 
