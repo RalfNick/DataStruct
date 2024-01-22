@@ -191,9 +191,9 @@ public class Sort {
         }
 
         // 将数据放入桶中
-        for (int i = 0; i < arr.length; i++) {
-            int index = (int) ((arr[i] - min) / d * (bucketNum - 1));
-            bucketList.get(index).add(arr[i]);
+        for (double v : arr) {
+            int index = (int) ((v - min) / d * (bucketNum - 1));
+            bucketList.get(index).add(v);
         }
 
         // 对每个桶排序

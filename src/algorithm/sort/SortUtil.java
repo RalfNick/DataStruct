@@ -43,7 +43,7 @@ public class SortUtil {
             }
             list.add(new int[]{left, right});
         }
-        return list.toArray(new int[1][list.size()]);
+        return list.toArray(new int[list.size()][]);
     }
 
     /**

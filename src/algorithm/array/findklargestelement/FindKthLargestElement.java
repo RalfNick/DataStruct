@@ -61,7 +61,7 @@ public class FindKthLargestElement {
     }
 
     private static int partion(int[] nums, int start, int end) {
-        int pivot = start, temp;
+        int pivot = start;
         while (start <= end) {
             while (start <= end && nums[start] <= nums[pivot]) start++;
             while (start <= end && nums[end] > nums[pivot]) end--;

@@ -12,45 +12,36 @@ import java.util.LinkedList;
  * boolean empty() 如果栈是空的，返回 true ；否则，返回 false 。
  * <a href="https://leetcode.cn/problems/implement-stack-using-queues/description/">Leet Code</a>
  */
-public class QueueStack {
+public class TwoQueueStack {
 
-    private final LinkedList<Integer> queue = new LinkedList<>();
+    private LinkedList<Integer> queue1 = new LinkedList<>();
+    private LinkedList<Integer> queue2 = new LinkedList<>();
 
     public void push(int x) {
-        queue.offer(x);
+        queue2.offer(x);
+        while (!queue1.isEmpty()) {
+            queue2.offer(queue1.poll());
+        }
+        LinkedList<Integer> temp = queue1;
+        queue1 = queue2;
+        queue2 = temp;
     }
 
     public int pop() {
-        if (queue.isEmpty()) {
+        if (queue1.isEmpty()) {
             return -1;
         }
-        int size = queue.size();
-        if (size < 2) {
-            return queue.poll();
-        }
-        for (int i = 0; i < size - 1; i++) {
-            queue.offer(queue.poll());
-        }
-        return queue.poll();
+        return queue1.pop();
     }
 
     public int top() {
-        if (queue.isEmpty()) {
+        if (queue1.isEmpty()) {
             return -1;
         }
-        int size = queue.size();
-        if (size < 2) {
-            return queue.peek();
-        }
-        for (int i = 0; i < size - 1; i++) {
-            queue.offer(queue.poll());
-        }
-        int val = queue.poll();
-        queue.offer(val);
-        return val;
+        return queue1.peek();
     }
 
     public boolean empty() {
-        return queue.isEmpty();
+        return queue1.isEmpty();
     }
 }
