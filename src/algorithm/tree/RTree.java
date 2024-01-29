@@ -1,8 +1,10 @@
 package algorithm.tree;
 
-import org.junit.Test;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * DESCRIPTION
@@ -709,8 +711,8 @@ public class RTree {
             return;
         }
         paths(root, list, sum, new ArrayList<>());
-        paths(root.left, list, sum, new ArrayList<>());
-        paths(root.right, list, sum, new ArrayList<>());
+        pathSum3(root.left, list, sum);
+        pathSum3(root.right, list, sum);
     }
 
     private static void paths(TreeNode root, List<List<Integer>> list, int sum, List<Integer> temp) {
@@ -978,7 +980,7 @@ public class RTree {
         }
         if ((p.val - root.val) * (q.val - root.val) > 0) {
             if (p.val < root.val) {
-                lowestCommonAncestor(root.left, p, q);
+                return lowestCommonAncestor(root.left, p, q);
             } else {
                 return lowestCommonAncestor(root.right, p, q);
             }
