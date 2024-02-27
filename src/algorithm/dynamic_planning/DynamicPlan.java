@@ -135,11 +135,16 @@ public class DynamicPlan {
             return maxProfit2(prices);
         }
         int[][][] d_k_s = new int[length][k + 1][2];
+        // k = 0 base case
+        for (int i = 0; i < length; i++) {
+            d_k_s[i][0][0] = 0;
+            d_k_s[i][0][1] = Integer.MIN_VALUE;
+        }
         for (int i = 0; i < length; i++) {
             for (int j = k; j >= 1; j--) {
                 if (i == 0) {
-                    d_k_s[i][j][0] = d_k_s[i][0][0] = 0;
-                    d_k_s[i][j][1] = d_k_s[i][0][1] = Integer.MIN_VALUE;
+                    d_k_s[i][j][0] = 0;
+                    d_k_s[i][j][1] = -prices[i];
                     continue;
                 }
                 d_k_s[i][j][0] = Math.max(d_k_s[i - 1][j][0], d_k_s[i - 1][j][1] + prices[i]);
@@ -327,6 +332,12 @@ public class DynamicPlan {
     public static int climbStairs2(int n) {
         if (n < 1) {
             return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
         }
         int[] arr = new int[n + 1];
         arr[1] = 1;
