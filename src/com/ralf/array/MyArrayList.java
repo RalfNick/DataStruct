@@ -27,7 +27,7 @@ public class MyArrayList {
             }
             int digit = x % 10;
             x /= 10;
-            res = res + res * 10 + digit;
+            res = res * 10 + digit;
         }
         return res;
     }
@@ -118,7 +118,7 @@ public class MyArrayList {
         }
         // 从后面找到第一个升序的位置
         int i = nums.length - 2;
-        while (i >= -1 && nums[i] >= nums[i + 1]) {
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
             i--;
         }
         if (i >= 0) {
@@ -430,7 +430,7 @@ public class MyArrayList {
             int mid = (left + right) >> 1;
             int count = 0;
             for (int i : nums) {
-                if (i <= nums[mid]) {
+                if (i <= mid) {
                     count++;
                 }
             }
@@ -480,7 +480,7 @@ public class MyArrayList {
      * <a href="https://leetcode.cn/problems/majority-element/description/">Leet Code</a>
      */
     static int majorityElement(int[] nums) {
-        int count = 0;
+        int count = 1;
         int majority = nums[0];
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] == majority) {
@@ -534,6 +534,50 @@ public class MyArrayList {
             if (entry.getValue() > fre) {
                 result.add(entry.getKey());
             }
+        }
+        return result;
+    }
+
+    static List<Integer> majorityElementII2(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        if (nums == null || nums.length < 1) {
+            return result;
+        }
+        int res1 = nums[0], res2 = nums[0];
+        int count1 = 0, count2 = 0;
+        for (int num : nums) {
+            if (num == res1) {
+                count1++;
+                continue;
+            }
+            if (num == res2) {
+                count2++;
+                continue;
+            }
+            if (count1 == 0) {
+                res1 = num;
+                count1 = 1;
+                continue;
+            }
+            if (count2 == 0) {
+                res2 = num;
+                count2 = 1;
+                continue;
+            }
+            count1--;
+            count2--;
+        }
+        count1 = 0;
+        count2 = 0;
+        for (int num : nums) {
+            if (num == res1) count1++;
+            else if (num == res2) count2++;
+        }
+        if (count1 > nums.length / 3) {
+            result.add(res1);
+        }
+        if (count2 > nums.length / 3) {
+            result.add(res2);
         }
         return result;
     }
@@ -771,6 +815,87 @@ public class MyArrayList {
         }
     }
 
+    /**
+     * 11. 盛最多水的容器
+     * 给定一个长度为 n 的整数数组 height 。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。
+     * 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+     * 返回容器可以储存的最大水量。
+     * 说明：你不能倾斜容器。
+     * <a href="https://leetcode.cn/problems/container-with-most-water/description/?company_slug=amazon">Leet Code</a>
+     */
+    static int maxArea(int[] height) {
+        if (height == null || height.length < 2) {
+            return 0;
+        }
+        int i = 0;
+        int j = height.length - 1;
+        int result = 0;
+        while (i < j) {
+            int w = j - i;
+            int h = height[i] < height[j] ? height[i++] : height[j--];
+            result = Math.max(result, w * h);
+        }
+        return result;
+    }
+
+    /**
+     * 56. 合并区间
+     * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间 。
+     * <a href="https://leetcode.cn/problems/merge-intervals/description/?envType=list&envId=hU60vjRS">LeetCode</a>
+     */
+    public int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length < 1) {
+            return null;
+        }
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+        List<int[]> result = new ArrayList<>();
+        for (int[] interval : intervals) {
+            int left = interval[0];
+            int right = interval[1];
+            int size = result.size();
+            if (size == 0 || result.get(size - 1)[1] < left) {
+                result.add(new int[]{left, right});
+            } else {
+                result.get(size - 1)[1] = Math.max(result.get(size - 1)[1], right);
+            }
+        }
+        return result.toArray(new int[result.size()][]);
+    }
+
+    /**
+     * 128. 最长连续序列
+     * 给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
+     * 请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
+     * <a href="https://leetcode.cn/problems/longest-consecutive-sequence/description/?envType=list&envId=hU60vjRS">LeetCode</a>
+     */
+    public int longestConsecutive(int[] nums) {
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+        int max = 0;
+        for (int num : nums) {
+            int cur = num;
+            if (set.contains(cur - 1)) {
+                continue;
+            }
+            int len = 1;
+            while (set.contains(cur + 1)) {
+                cur++;
+                len++;
+            }
+            max = Math.max(len, max);
+        }
+        return max;
+    }
 }
 
 

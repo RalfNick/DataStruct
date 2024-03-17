@@ -953,6 +953,104 @@ public class MyTree {
         }
         return buildTree(preorder, 0, 0, inorder.length, map);
     }
+
+    /**
+     * 530. 二叉搜索树的最小绝对差
+     * 给你一个二叉搜索树的根节点 root ，返回 树中任意两不同节点值之间的最小差值 。
+     * 差值是一个正数，其数值等于两值之差的绝对值。
+     * <a href="https://leetcode.cn/problems/minimum-absolute-difference-in-bst/description/?envType=study-plan-v2&envId=top-interview-150">LeetCode</a>
+     */
+    static int res;
+    static int pre;
+
+    static int getMinimumDifference(TreeNode root) {
+        res = Integer.MAX_VALUE;
+        pre = -1;
+        return 0;
+    }
+
+    private static void getMinimumDifferenceInternal(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        getMinimumDifferenceInternal(root.left);
+        if (pre == -1) {
+            pre = root.val;
+        } else {
+            res = Math.min(root.val - pre, res);
+            pre = root.val;
+        }
+        getMinimumDifferenceInternal(root.right);
+    }
+
+    /**
+     * 98. 验证二叉搜索树
+     * 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
+     * <a href="https://leetcode.cn/problems/validate-binary-search-tree/description/?envType=study-plan-v2&envId=top-interview-150">LeetCode</a>
+     */
+    static boolean isValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private static boolean isValidBST(TreeNode root, long left, long right) {
+        if (root == null) {
+            return true;
+        }
+        if (root.val <= left || root.val >= right) {
+            return false;
+        }
+        return isValidBST(root.left, left, root.val) && isValidBST(root.right, root.val, right);
+    }
+
+    /**
+     * 501. 二叉搜索树中的众数
+     * 给你一个含重复值的二叉搜索树（BST）的根节点 root ，找出并返回 BST 中的所有 众数（即，出现频率最高的元素）。
+     * 如果树中有不止一个众数，可以按 任意顺序 返回。
+     * <a href="https://leetcode.cn/problems/find-mode-in-binary-search-tree/">LeetCode</a>
+     */
+    private static TreeNode findModeOfPre = null;
+    private static int findModeOfCount = 0;
+    private static int findModeOfMax = 0;
+    static int[] findMode(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        List<Integer> res = new ArrayList<>();
+        findModeDfs(root, res);
+        int[] arr = new int[res.size()];
+        for (int i = 0; i < res.size(); i++) {
+            arr[i] = res.get(i);
+        }
+        return arr;
+    }
+
+    private static void findModeDfs(TreeNode root, List<Integer> res) {
+        if (root == null) {
+            return;
+        }
+        findModeDfs(root.left, res);
+        if (findModeOfPre == null) {
+            findModeOfCount = 1;
+        } else {
+            if (findModeOfPre.val == root.val) {
+                findModeOfCount++;
+            } else {
+                findModeOfCount = 1;
+            }
+        }
+        if (findModeOfCount == findModeOfMax) {
+            res.add(root.val);
+        } else if (findModeOfCount > findModeOfMax) {
+            findModeOfMax = findModeOfCount;
+            res.clear();
+            res.add(root.val);
+        }
+        findModeOfPre = root;
+        findModeDfs(root.right, res);
+    }
 }
 
 

@@ -370,19 +370,24 @@ public class Greedy {
      * @return
      */
     public static int candy(int[] ratings) {
-        if (ratings == null || ratings.length < 1) {
-            return 0;
-        }
-        int count = 1;
-        int last = ratings[0];
-        for (int i = 1; i < ratings.length; i++) {
-            if (ratings[i] != last) {
-                count += 2;
+        int n = ratings.length;
+        int[] left = new int[n];
+        for (int i = 0; i < n; i++) {
+            if (i > 0 && ratings[i] > ratings[i - 1]) {
+                left[i] = left[i - 1] + 1;
             } else {
-                count += 1;
+                left[i] = 1;
             }
-            last = ratings[i];
         }
-        return count;
+        int right = 0, ret = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (i < n - 1 && ratings[i] > ratings[i + 1]) {
+                right++;
+            } else {
+                right = 1;
+            }
+            ret += Math.max(left[i], right);
+        }
+        return ret;
     }
 }

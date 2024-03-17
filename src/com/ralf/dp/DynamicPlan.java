@@ -1,6 +1,9 @@
 package com.ralf.dp;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class DynamicPlan {
 
@@ -58,6 +61,32 @@ public class DynamicPlan {
             arr[i] = arr[i - 1] + arr[i - 2];
         }
         return arr[n];
+    }
+
+    /**
+     * 509. 斐波那契数
+     * 斐波那契数 （通常用 F(n) 表示）形成的序列称为 斐波那契数列 。该数列由 0 和 1 开始，后面的每一项数字都是前面两项数字的和。也就是：
+     * F(0) = 0，F(1) = 1
+     * F(n) = F(n - 1) + F(n - 2)，其中 n > 1
+     * 给定 n ，请计算 F(n) 。
+     * <a href="https://leetcode.cn/problems/fibonacci-number/description/?envType=study-plan-v2&envId=dynamic-programming">Leet Code</a>
+     */
+    static int fib(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+        int a = 0;
+        int b = 1;
+        int res = 1;
+        for (int i = 2; i <= n; i++) {
+            res = a + b;
+            a = b;
+            b = res;
+        }
+        return res;
     }
 
     /**
@@ -527,4 +556,209 @@ public class DynamicPlan {
         }
         return right - left - 1;
     }
+
+    /**
+     * 279. 完全平方数
+     * 给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
+     * 完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。
+     * <a href="https://leetcode.cn/problems/perfect-squares/?envType=list&envId=Lkxop8fK">Leet Code</a>
+     */
+    public int numSquares(int n) {
+        int[] res = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            int min = Integer.MAX_VALUE;
+            for (int j = 1; j * j <= i; j++) {
+                min = Math.min(min, res[i - j * j]);
+            }
+            res[i] = min + 1;
+        }
+        return res[n];
+    }
+
+    /**
+     * 221. 最大正方形
+     * 在一个由 '0' 和 '1' 组成的二维矩阵内，找到只包含 '1' 的最大正方形，并返回其面积。
+     * <a href="https://leetcode.cn/problems/maximal-square/description/?envType=study-plan-v2&envId=dynamic-programming">Leet Code</a>
+     */
+    static int maximalSquare(char[][] matrix) {
+        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
+            return 0;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int maxSlide = 0;
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == '1') {
+                    if (i == 0 || j == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                    }
+                }
+                maxSlide = Math.max(maxSlide, dp[i][j]);
+            }
+        }
+        return maxSlide * maxSlide;
+    }
+
+    /**
+     * 1143. 最长公共子序列
+     * 给定两个字符串 text1 和 text2，返回这两个字符串的最长 公共子序列 的长度。如果不存在 公共子序列 ，返回 0 。
+     * 一个字符串的 子序列 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
+     * 例如，"ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。
+     * 两个字符串的 公共子序列 是这两个字符串所共同拥有的子序列。
+     * <a href="https://leetcode.cn/problems/longest-common-subsequence/description/?envType=study-plan-v2&envId=dynamic-programming">Leet Code</a>
+     */
+    static int longestCommonSubsequence(String text1, String text2) {
+        if (text1 == null || text1.isEmpty() || text2 == null || text2.isEmpty()) {
+            return 0;
+        }
+        int m = text1.length();
+        int n = text2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            char ch1 = text1.charAt(i - 1);
+            for (int j = 1; j <= n; j++) {
+                char ch2 = text2.charAt(j - 1);
+                if (ch1 == ch2) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+    /**
+     * 0-1 背包问题
+     * 有一个容量为 N 的背包，要用这个背包装下物品的价值最大，这些物品有两个属性：体积 w 和价值 v。
+     * 定义一个二维数组 dp 存储最大价值，其中 dp[i][j] 表示前 i 件物品体积不超过 j 的情况下能达到的最大价值。设第 i 件物品体积为 w，价值为 v，根据第 i 件物品是否添加到背包中，可以分两种情况讨论：
+     * 第 i 件物品没添加到背包，总体积不超过 j 的前 i 件物品的最大价值就是总体积不超过 j 的前 i-1 件物品的最大价值，dp[i][j] = dp[i-1][j]。
+     * 第 i 件物品添加到背包中，dp[i][j] = dp[i-1][j-w] + v。
+     * 第 i 件物品可添加也可以不添加，取决于哪种情况下最大价值更大。因此，0-1 背包的状态转移方程为：
+     * dp[i][j] = max(dp[i-1][j], dp[i-1][j-w] + v)
+     *
+     * @param W       最大体积
+     * @param N       个数
+     * @param weights 重量
+     * @param values  价值
+     */
+    static int knapsack(int W, int N, int[] weights, int[] values) {
+        int[][] dp = new int[N + 1][W + 1];
+        for (int i = 1; i <= N; i++) {
+            int weight = weights[i - 1];
+            int v = values[i - 1];
+            for (int j = 1; j <= W; j++) {
+                if (j >= weight) {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weight] + v);
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[N][W];
+    }
+
+    static int knapsack2(int W, int N, int[] weights, int[] values) {
+        int[] dp = new int[W + 1];
+        for (int i = 1; i <= N; i++) {
+            int weight = weights[i - 1];
+            int v = values[i - 1];
+            for (int j = W; j >= 1; j--) {
+                if (j >= weight) {
+                    dp[j] = Math.max(dp[j], dp[j - weight] + v);
+                }
+            }
+        }
+        return dp[W];
+    }
+
+    /**
+     * 494. 目标和
+     * 给你一个非负整数数组 nums 和一个整数 target 。
+     * 向数组中的每个整数前添加 '+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
+     * 例如，nums = [2, 1] ，可以在 2 之前添加 '+' ，在 1 之前添加 '-' ，然后串联起来得到表达式 "+2-1" 。
+     * 返回可以通过上述方法构造的、运算结果等于 target 的不同 表达式 的数目。
+     * <a href="https://leetcode.cn/problems/target-sum/description/">Leet Code</a>
+     */
+    static int findTargetSumWays(int[] nums, int target) {
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        int diff = sum - target;
+        if (diff < 0 || diff % 2 != 0) {
+            return 0;
+        }
+        int neg = diff / 2;
+        int n = nums.length;
+        // 方法一：二维数组
+//        int[][] dp = new int[n + 1][neg + 1];
+//        dp[0][0] =1;
+//        for (int i = 0; i < n; i++) {
+//            int temp = nums[i];
+//            for (int j = 0; j <= neg; j++) {
+//                if (j >= temp) {
+//                    dp[i][j] += dp[i - 1][j - temp];
+//                }
+//            }
+//        }
+//        return dp[n][neg];
+
+        // 方法二：一维数组
+        int[] dp = new int[neg + 1];
+        dp[0] = 1;
+        for (int num : nums) {
+            for (int j = neg; j >= num; j--) {
+                dp[j] += dp[j - num];
+            }
+        }
+        return dp[neg];
+    }
+
+    /**
+     * 139. 单词拆分
+     * 给你一个字符串 s 和一个字符串列表 wordDict 作为字典。如果可以利用字典中出现的一个或多个单词拼接出 s 则返回 true。
+     * 注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。
+     * <a href="https://leetcode.cn/problems/word-break/description/?envType=study-plan-v2&envId=top-interview-150">LeetCode</a>
+     */
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if (s == null || s.isEmpty() || wordDict == null || wordDict.isEmpty()) {
+            return false;
+        }
+        Set<String> set = new HashSet<>(wordDict);
+        int n = s.length();
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && set.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
