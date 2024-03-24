@@ -316,6 +316,7 @@ public class DynamicPlan {
      * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
      * 问总共有多少条不同的路径？
      * <a href="https://leetcode.cn/problems/unique-paths/description/?envType=list&envId=Lkxop8fK">Leet Code</a>
+     * <a href="https://leetcode.cn/problems/combination-sum-iv/solutions/124393/xi-wang-yong-yi-chong-gui-lu-gao-ding-bei-bao-wen-/?envType=list&envId=Lkxop8fK">解法</a>
      */
     public static int uniquePaths(int m, int n) {
         int[][] paths = new int[m][n];
@@ -428,10 +429,9 @@ public class DynamicPlan {
             return 0;
         }
         int pre = 0;
-        int temp = 0;
         int cur = 0;
         for (int num : nums) {
-            temp = cur;
+            int temp = cur;
             cur = Math.max(pre + num, cur);
             pre = temp;
         }

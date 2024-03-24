@@ -385,4 +385,51 @@ public class BinarySearch {
         return res;
     }
 
+    public static void main(String[] args) {
+        // weights = [1,2,3,4,5,6,7,8,9,10], days = 5
+        int[] weights = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int days = 5;
+        int res = shipWithinDays(weights, days);
+        System.out.println("shipWithinDays res=" + res);
+//         weights = [3,2,2,4,1,4], days = 3
+        int[] weights1 = {3, 2, 2, 4, 1, 4};
+        int days1 = 3;
+        int res1 = shipWithinDays(weights1, days1);
+        System.out.println("shipWithinDays res1=" + res1);
+    }
+
+    public static int shipWithinDays(int[] weights, int days) {
+        int left = 0;
+        int right = 0;
+        for (int weight : weights) {
+            left = Math.max(weight, left);
+            right += weight;
+        }
+        int capacity = 0;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            int usedDays = getUsedDays(weights, mid);
+            if (usedDays > days) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+                capacity = mid;
+            }
+        }
+        return capacity;
+    }
+
+    private static int getUsedDays(int[] weights, int capacity) {
+        int day = 1;
+        int sum = 0;
+        for (int weight : weights) {
+            sum += weight;
+            if (sum > capacity) {
+                sum = weight;
+                day += 1;
+            }
+        }
+        return day;
+    }
+
 }

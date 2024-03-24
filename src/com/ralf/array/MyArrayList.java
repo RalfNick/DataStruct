@@ -896,6 +896,147 @@ public class MyArrayList {
         }
         return max;
     }
+
+    /**
+     * 167. 两数之和 II - 输入有序数组
+     * 给你一个下标从 1 开始的整数数组 numbers ，该数组已按 非递减顺序排列  ，请你从数组中找出满足相加之和等于目标数 target 的两个数。如果设这两个数分别是 numbers[index1] 和 numbers[index2] ，则 1 <= index1 < index2 <= numbers.length 。
+     * 以长度为 2 的整数数组 [index1, index2] 的形式返回这两个整数的下标 index1 和 index2。
+     * 你可以假设每个输入 只对应唯一的答案 ，而且你 不可以 重复使用相同的元素。
+     * 你所设计的解决方案必须只使用常量级的额外空间。
+     * <a href="https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/description/?envType=study-plan-v2&envId=top-interview-150">LeetCode</a>
+     */
+    public int[] twoSumII(int[] numbers, int target) {
+        int i = 0;
+        int j = numbers.length - 1;
+        int[] res = new int[2];
+        while (i < j) {
+            int temp = numbers[i] + numbers[j];
+            if (temp == target) {
+                res[0] = i;
+                res[1] = j;
+                break;
+            }
+            if (temp > target) {
+                j--;
+            } else {
+                i++;
+            }
+        }
+        res[0] += 1;
+        res[1] += 1;
+        return res;
+    }
+
+    /**
+     * 240. 搜索二维矩阵 II
+     * 编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target 。该矩阵具有以下特性：
+     * 每行的元素从左到右升序排列。
+     * 每列的元素从上到下升序排列。
+     * <a href="https://leetcode.cn/problems/search-a-2d-matrix-ii/description/">LeetCode</a>
+     */
+    public static boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
+            return false;
+        }
+        int m = matrix.length, n = matrix[0].length;
+        int i = 0, j = n - 1;
+        while (i < m && j >= 0) {
+            if (matrix[i][j] == target) {
+                return true;
+            }
+            if (matrix[i][j] > target) {
+                j--;
+            } else {
+                i++;
+            }
+        }
+        return false;
+    }
+
+    public static boolean searchMatrix2(int[][] matrix, int target) {
+        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
+            return false;
+        }
+        for (int[] ints : matrix) {
+            if (searchMatrixInternal(ints, target)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean searchMatrixInternal(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (nums[mid] == target) {
+                return true;
+            }
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 189. 轮转数组
+     * 给定一个整数数组 nums，将数组中的元素向右轮转 k 个位置，其中 k 是非负数。
+     * <a href="https://leetcode.cn/problems/rotate-array/description/?envType=study-plan-v2&envId=top-interview-150">LeetCode</a>
+     */
+    public void rotate(int[] nums, int k) {
+        final int len = nums.length;
+        int[] temp = new int[len];
+        for (int i = 0; i < len; i++) {
+            int index = (i + k) % len;
+            temp[index] = nums[i];
+        }
+        System.arraycopy(temp, 0, nums, 0, len);
+    }
+
+    /**
+     * 392. 判断子序列
+     */
+    public void rotate1(int[] nums, int k) {
+        k %= nums.length;
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
+
+    private void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    public boolean isSubsequence(String s, String t) {
+        if (s == null || s.isEmpty()) {
+            return true;
+        }
+        if (t == null || t.isEmpty()) {
+            return false;
+        }
+        if (s.length() > t.length()) {
+            return false;
+        }
+        int i = 0, j = 0;
+        while (i < s.length() && j < t.length()) {
+            if (s.charAt(i) == t.charAt(j)) {
+                i++;
+            }
+            j++;
+        }
+        return i == s.length();
+    }
+
 }
 
 
