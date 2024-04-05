@@ -432,4 +432,62 @@ public class BinarySearch {
         return day;
     }
 
+    /**
+     * NC74 数字在升序数组中出现的次数
+     */
+    public int GetNumberOfK (int[] nums, int k) {
+        if(nums == null || nums.length < 1 || nums[nums.length -1] < k) {
+            return 0;
+        }
+        int left = searchLeft(nums, k);
+        if(left == -1) {
+            return 0;
+        }
+        int right = searchRight(nums, k);
+        if (right == -1) {
+            return 0;
+        }
+        return right - left + 1;
+    }
+
+    private int searchLeft(int[] nums, int k) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < k) {
+                left = mid + 1;
+            } else if(nums[mid] > k) {
+                right = mid - 1;
+            } else {
+                if (mid < 1 || nums[mid - 1] != k) {
+                    return mid;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private int searchRight(int[] nums, int k) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < k) {
+                left = mid + 1;
+            } else if(nums[mid] > k) {
+                right = mid - 1;
+            } else {
+                if (mid >= nums.length - 1 || nums[mid + 1] != k) {
+                    return mid;
+                } else {
+                    left = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+
 }

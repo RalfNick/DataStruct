@@ -927,6 +927,75 @@ public class MyArrayList {
         return res;
     }
 
+
+    /**
+     * 74. 搜索二维矩阵
+     * 给你一个满足下述两条属性的 m x n 整数矩阵：
+     * 每行中的整数从左到右按非严格递增顺序排列。
+     * 每行的第一个整数大于前一行的最后一个整数。
+     * 给你一个整数 target ，如果 target 在矩阵中，返回 true ；否则，返回 false 。
+     * <a href="https://leetcode.cn/problems/search-a-2d-matrix/description/">LeetCode</a>
+     */
+    public static boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
+            return false;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int i = 0, j = m * n - 1;
+        while (i <= j) {
+            int mid = (i + j) / 2;
+            if (matrix[mid / n][mid % n] == target) {
+                return true;
+            }
+            if (matrix[mid / n][mid % n] > target) {
+                j = mid - 1;
+            } else {
+                i = mid + 1;
+            }
+        }
+        return false;
+    }
+
+    public static boolean searchMatrix2(int[][] matrix, int target) {
+        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
+            return false;
+        }
+        int m = matrix.length;
+        int i = 0, j = m - 1;
+        int index = 0;
+        // row search
+        while (i <= j) {
+            int mid = (i + j) / 2;
+            if (matrix[mid][0] > target) {
+                j = mid - 1;
+            } else {
+                if (mid == m - 1 || matrix[mid + 1][0] > target) {
+                    index = mid;
+                    break;
+                } else {
+                    i = mid + 1;
+                }
+            }
+        }
+        int n = matrix[0].length;
+        int[] num = matrix[index];
+        i = 0;
+        j = n - 1;
+        while (i <= j) {
+            int mid = (i + j) / 2;
+            if (num[mid] == target) {
+                return true;
+            }
+            if (num[mid] > target) {
+                j = mid - 1;
+            } else {
+                i = mid + 1;
+            }
+        }
+        return false;
+    }
+
     /**
      * 240. 搜索二维矩阵 II
      * 编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target 。该矩阵具有以下特性：
@@ -934,7 +1003,7 @@ public class MyArrayList {
      * 每列的元素从上到下升序排列。
      * <a href="https://leetcode.cn/problems/search-a-2d-matrix-ii/description/">LeetCode</a>
      */
-    public static boolean searchMatrix(int[][] matrix, int target) {
+    public static boolean searchMatrixII(int[][] matrix, int target) {
         if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
             return false;
         }
@@ -953,7 +1022,7 @@ public class MyArrayList {
         return false;
     }
 
-    public static boolean searchMatrix2(int[][] matrix, int target) {
+    public static boolean searchMatrixII2(int[][] matrix, int target) {
         if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
             return false;
         }
@@ -1037,6 +1106,128 @@ public class MyArrayList {
         return i == s.length();
     }
 
+
+    /**
+     * 263. 丑数
+     * 丑数 就是只包含质因数 2、3 和 5 的正整数。
+     */
+    public boolean isUgly(int n) {
+        if (n < 1) {
+            return false;
+        }
+        while (n % 2 == 0) n /= 2;
+        while (n % 3 == 0) n /= 3;
+        while (n % 5 == 0)
+            n /= 5;
+        return n == 1;
+    }
+
+    /**
+     * NC41 最长无重复子数组
+     */
+    public int maxLength(int[] arr) {
+        if (arr == null || arr.length < 1) {
+            return 0;
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        int max = 0;
+        int left = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (map.containsKey(arr[i])) {
+                left = Math.max(left, map.get(arr[i]) + 1);
+            }
+            max = Math.max(max, i - left + 1);
+            map.put(arr[i], i);
+        }
+        return max;
+    }
+
+    /**
+     * 349. 两个数组的交集
+     * 给定两个数组 nums1 和 nums2 ，返回 它们的交集,输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。
+     * <a href="https://leetcode.cn/problems/intersection-of-two-arrays/">Leet Code</a>
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        for (int num : nums1) {
+            set1.add(num);
+        }
+        for (int num : nums2) {
+            set2.add(num);
+        }
+        int[] res = new int[Math.min(nums1.length, nums2.length)];
+        int i = 0;
+        for (int num : set1) {
+            if (set2.contains(num)) {
+                res[i++] = num;
+            }
+        }
+        return Arrays.copyOfRange(res, 0, i);
+    }
+
+    public int[] intersection2(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums1.length < 1 || nums2 == null || nums2.length < 1) {
+            return new int[0];
+        }
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int i = 0, j = 0, k = 0;
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        int[] res = new int[Math.min(len1, len2)];
+        while (i < len1 && j < len2) {
+            if (nums1[i] == nums2[j]) {
+                if (k == 0 || res[k - 1] != nums1[i]) {
+                    res[k++] = nums1[i];
+                }
+                i++;
+                j++;
+            } else if (nums1[i] > nums2[j]) {
+                j++;
+            } else {
+                i++;
+            }
+        }
+        return Arrays.copyOfRange(res, 0, i);
+    }
+
+    /**
+     * 350. 两个数组的交集II
+     * 给定两个数组 nums1 和 nums2 ，返回 它们的交集,输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。
+     * <a href="https://leetcode.cn/problems/intersection-of-two-arrays/">Leet Code</a>
+     */
+    public int[] intersectionII(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums1.length < 1 || nums2 == null || nums2.length < 1) {
+            return new int[0];
+        }
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        if (len1 > len2) {
+            int[] temp = nums1;
+            nums1 = nums2;
+            nums2 = temp;
+        }
+        Map<Integer, Integer> map1 = new HashMap<>();
+        for (int num : nums1) {
+            map1.put(num, map1.getOrDefault(num, 0) + 1);
+        }
+        int[] res = new int[Math.min(len1, len2)];
+        int i = 0;
+        for (int num : nums2) {
+            int count = map1.getOrDefault(num, 0);
+            if (count > 0) {
+                res[i++] = num;
+                count--;
+            }
+            if (count > 0) {
+                map1.put(num, count);
+            } else {
+                map1.remove(num);
+            }
+        }
+        return Arrays.copyOfRange(res, 0, i);
+    }
 }
 
 

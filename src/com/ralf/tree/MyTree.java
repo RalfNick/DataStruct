@@ -403,6 +403,8 @@ public class MyTree {
         public Node left;
         public Node right;
         public Node next;
+
+        public List<Node> children;
     }
 
     /**
@@ -1014,6 +1016,7 @@ public class MyTree {
     private static TreeNode findModeOfPre = null;
     private static int findModeOfCount = 0;
     private static int findModeOfMax = 0;
+
     static int[] findMode(TreeNode root) {
         if (root == null) {
             return null;
@@ -1051,6 +1054,311 @@ public class MyTree {
         findModeOfPre = root;
         findModeDfs(root.right, res);
     }
+
+    /**
+     * LCR 153. 二叉树中和为目标值的路径
+     * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+     * 叶子节点 是指没有子节点的节点
+     */
+    public List<List<Integer>> pathTarget(TreeNode root, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        if (root == null) {
+            return list;
+        }
+        pathTargetDfs(root, target, new ArrayList<>(), list);
+        return list;
+    }
+
+    private void pathTargetDfs(TreeNode root, int target, List<Integer> path, List<List<Integer>> list) {
+        if (root == null) {
+            return;
+        }
+        path.add(root.val);
+        if (root.left == null && root.right == null && root.val == target) {
+            list.add(new ArrayList<>(path));
+        }
+        pathTargetDfs(root.left, target - root.val, path, list);
+        pathTargetDfs(root.right, target - root.val, path, list);
+        path.remove(path.size() - 1);
+    }
+
+    /**
+     * 257. 二叉树的所有路径
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> list = new ArrayList<>();
+        if (root == null) {
+            return list;
+        }
+        binaryTreePathsDfs(root, list, "");
+        return list;
+    }
+
+    private void binaryTreePathsDfs(TreeNode root, List<String> list, String path) {
+        if (root == null) {
+            return;
+        }
+        StringBuilder builder = new StringBuilder(path);
+        builder.append(root.val);
+        if (root.left == null && root.right == null) {
+            list.add(builder.toString());
+        } else {
+            builder.append("->");
+            binaryTreePathsDfs(root.left, list, builder.toString());
+            binaryTreePathsDfs(root.right, list, builder.toString());
+        }
+    }
+
+    /**
+     * 559. N 叉树的最大深度
+     */
+    public int maxDepth(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.children == null) {
+            return 1;
+        }
+        int maxChildDepth = 0;
+        for (Node node : root.children) {
+            int depth = maxDepth(node);
+            maxChildDepth = Math.max(maxChildDepth, depth);
+        }
+        return maxChildDepth + 1;
+    }
+
+    /**
+     * 543. 二叉树的直径
+     */
+    public int diameterOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int[] res = new int[1];
+        diameterOfBinaryTree(root, res);
+        return res[0] - 1;
+    }
+
+    private int diameterOfBinaryTree(TreeNode root, int[] res) {
+        if (root == null) {
+            return 0;
+        }
+        int l = diameterOfBinaryTree(root.left, res);
+        int r = diameterOfBinaryTree(root.right, res);
+        res[0] = Math.max(res[0], l + r + 1);
+        return Math.max(l, r) + 1;
+    }
+
+    /**
+     * 1522. N 叉树的直径
+     * 给定一棵 N 叉树 的根节点 root ，计算这棵树的直径长度。
+     * N 叉树的直径指的是树中任意两个节点间路径中 最长 路径的长度。这条路径可能经过根节点，也可能不经过根节点。
+     */
+    public int diameter(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        int[] res = new int[1];
+        diameterDfs(root, res, 0);
+        return res[0];
+    }
+
+    public int diameterDfs(Node root, int[] res, int depth) {
+        if (root.children == null || root.children.isEmpty()) {
+            return depth;
+        }
+        int maxDepth1 = depth, maxDepth2 = 0;
+        for (Node node : root.children) {
+            int temp = diameterDfs(node, res, depth + 1);
+            if (temp > maxDepth1) {
+                maxDepth2 = maxDepth1;
+                maxDepth1 = temp;
+            } else if (temp > maxDepth2) {
+                maxDepth2 = temp;
+            }
+            int distance = maxDepth1 + maxDepth2 - 2 * depth;
+            res[0] = Math.max(res[0], distance);
+        }
+        return maxDepth1;
+    }
+
+    /**
+     * JZ36 二叉搜索树与双向链表
+     * <a href="https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13">牛客</a>
+     */
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        if (pRootOfTree == null) {
+            return null;
+        }
+        TreeNode[] pre = new TreeNode[1];
+        TreeNode root = pRootOfTree;
+        ConvertDfs(pRootOfTree, pre);
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root;
+    }
+
+    public void ConvertDfs(TreeNode root, TreeNode[] pre) {
+        if (root == null) {
+            return;
+        }
+        ConvertDfs(root.left, pre);
+        root.left = pre[0];
+        if (pre[0] != null) {
+            pre[0].right = root;
+        }
+        pre[0] = root;
+        ConvertDfs(root.right, pre);
+    }
+
+    /**
+     * 426. 将二叉搜索树转化为排序的双向链表
+     * 将一个 二叉搜索树 就地转化为一个 已排序的双向循环链表 。
+     * 对于双向循环列表，你可以将左右孩子指针作为双向循环链表的前驱和后继指针，第一个节点的前驱是最后一个节点，最后一个节点的后继是第一个节点。
+     * 特别地，我们希望可以 就地 完成转换操作。当转化完成以后，树中节点的左指针需要指向前驱，树中节点的右指针需要指向后继。还需要返回链表中最小元素的指针。
+     */
+    public Node treeToDoublyList(Node root) {
+        if (root == null) {
+            return null;
+        }
+        Node[] pre = new Node[2];
+        treeToDoublyListDfs(root, pre);
+        Node head = pre[1];
+        Node last = pre[0];
+        head.left = last;
+        last.right = head;
+        return head;
+    }
+
+    private void treeToDoublyListDfs(Node root, Node[] pre) {
+        if (root == null) {
+            return;
+        }
+        treeToDoublyListDfs(root.left, pre);
+        if (pre[0] != null) {
+            pre[0].right = root;
+        } else {
+            pre[1] = root;
+        }
+        root.left = pre[0];
+        pre[0] = root;
+        treeToDoublyListDfs(root.right, pre);
+    }
+
+    /**
+     * BM35 判断是不是完全二叉树
+     * <a href="https://www.nowcoder.com/practice/8daa4dff9e36409abba2adbe413d6fae?tpId=295&tqId=2299105&ru=/exam/oj&qru=/ta/format-top101/question-ranking&sourceUrl=%2Fexam%2Foj">牛客</a>
+     */
+    public boolean isCompleteTree(TreeNode root) {
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        boolean notComplete = false;
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node == null) {
+                notComplete = true;
+                continue;
+            }
+            if (notComplete) {
+                return false;
+            }
+            queue.offer(node.left);
+            queue.offer(node.right);
+        }
+        return true;
+    }
+
+    /**
+     * 129. 求根节点到叶节点数字之和
+     * <a href="https://leetcode.cn/problems/sum-root-to-leaf-numbers/description/">Leet Code</a>
+     */
+    public int sumNumbers(TreeNode root) {
+        return sumNumbersDfs(root, 0);
+    }
+
+    private int sumNumbersDfs(TreeNode root, int sum) {
+        if (root == null) {
+            return 0;
+        }
+        sum = sum * 10 + root.val;
+        if (root.left == null && root.right == null) {
+            return sum;
+        }
+        return sumNumbersDfs(root.left, sum) + sumNumbersDfs(root.right, sum);
+    }
+
+    /**
+     * 173. 二叉搜索树迭代器
+     * <a href="https://leetcode.cn/problems/binary-search-tree-iterator/description/">Leet Code</a>
+     */
+    class BSTIterator {
+
+        private List<Integer> list = new ArrayList<>();
+        private int index = 0;
+
+        public BSTIterator(TreeNode root) {
+            inOrder(root);
+        }
+
+        private void inOrder(TreeNode root) {
+            if (root == null) {
+                return;
+            }
+            inOrder(root.left);
+            list.add(root.val);
+            inOrder(root.right);
+        }
+
+        public int next() {
+            return list.get(index);
+        }
+
+        public boolean hasNext() {
+            return index < list.size();
+        }
+    }
+
+    class BSTIterator2 {
+
+        private TreeNode cur = null;
+        private final Deque<TreeNode> queue = new LinkedList<>();
+
+        public BSTIterator2(TreeNode root) {
+            cur = root;
+        }
+
+        public int next() {
+            while (cur != null) {
+                queue.push(cur);
+                cur = cur.left;
+            }
+            TreeNode node = queue.pop();
+            int result = node.val;
+            cur = node.right;
+            return result;
+        }
+
+        public boolean hasNext() {
+            return cur != null || !queue.isEmpty();
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

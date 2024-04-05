@@ -746,6 +746,47 @@ public class DynamicPlan {
         }
         return dp[n];
     }
+
+    /**
+     * 1746. 经过一次操作后的最大子数组和
+     * 你有一个整数数组 nums。你只能将一个元素 nums[i] 替换为 nums[i] * nums[i]。
+     * 返回替换后的最大子数组和。
+     */
+    public static int maxSumAfterOperation(int[] nums) {
+        int sum = 0;
+        int dp1 = 0;
+        int dp2 = 0;
+        for (int num : nums) {
+            dp1 = Math.max(dp2 + num * num, dp1 + num);
+            dp2 = Math.max(dp2 + num, 0);
+            sum = Math.max(sum, dp1);
+        }
+        return sum;
+    }
+
+    /**
+     * 718. 最长重复子数组
+     * 给两个整数数组 nums1 和 nums2 ，返回 两个数组中 公共的 、长度最长的子数组的长度 。
+     */
+    public int findLength(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums1.length < 1 || nums2 == null || nums2.length < 1) {
+            return 0;
+        }
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        int res = 0;
+        for (int i = len1 - 1; i >= 0; i--) {
+            int num = nums1[i];
+            for (int j = len2 - 1; j >= 0; j--) {
+                if (num == nums2[j]) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i + 1][j + 1] + 1);
+                }
+                res = Math.max(dp[i][j], res);
+            }
+        }
+        return res;
+    }
 }
 
 
