@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class MyStack {
@@ -211,7 +212,7 @@ public class MyStack {
                 if (!stack.isEmpty()) {
                     stack.pop();
                 }
-            } else if (str.length() > 0 && !".".equals(str)) {
+            } else if (!str.isEmpty() && !".".equals(str)) {
                 stack.push(str);
             }
         }
@@ -373,6 +374,69 @@ public class MyStack {
             num[ch - 'a'] -= 1;
         }
         return sb.toString();
+    }
+
+    int ptr;
+
+    /**
+     * 394. 字符串解码
+     */
+    public String decodeString(String s) {
+        if (s.isEmpty()) {
+            return "";
+        }
+        LinkedList<String> stack = new LinkedList<>();
+        char[] chs = s.toCharArray();
+        while (ptr < chs.length) {
+            char ch = chs[ptr];
+            if (Character.isDigit(ch)) {
+                String digit = getDigit(s);
+                stack.addLast(digit);
+            } else if (Character.isLetter(ch) || ch == '[') {
+                stack.addLast(String.valueOf(chs[ptr++]));
+            } else {
+                ptr++;
+                LinkedList<String> sub = new LinkedList<>();
+                while (!"[".equals(stack.peekLast())) {
+                    sub.addFirst(stack.removeLast());
+                }
+                stack.removeLast();
+                StringBuilder sb = new StringBuilder();
+                int count = Integer.parseInt(stack.removeLast());
+                String str = getString(sub);
+                while (count-- >= 0) {
+                    sb.append(str);
+                }
+                stack.addLast(sb.toString());
+            }
+        }
+        return getString(stack);
+    }
+
+    private String getString(LinkedList<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (String str : list) {
+            sb.append(str);
+        }
+        return sb.toString();
+    }
+
+    private String getDigit(String s) {
+        StringBuilder sb = new StringBuilder();
+        while (Character.isDigit(s.charAt(ptr))) {
+            sb.append(s.charAt(ptr));
+            ptr++;
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        String temp = "3[a]2[bc]";
+        MyStack stack = new MyStack();
+        String decodeString = stack.decodeString(temp);
+
+        System.out.println("decodeString=" + decodeString);
+
     }
 
 }

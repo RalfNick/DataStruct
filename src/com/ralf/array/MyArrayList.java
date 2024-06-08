@@ -1066,9 +1066,6 @@ public class MyArrayList {
         System.arraycopy(temp, 0, nums, 0, len);
     }
 
-    /**
-     * 392. 判断子序列
-     */
     public void rotate1(int[] nums, int k) {
         k %= nums.length;
         reverse(nums, 0, nums.length - 1);
@@ -1086,6 +1083,9 @@ public class MyArrayList {
         }
     }
 
+    /**
+     * 392. 判断子序列
+     */
     public boolean isSubsequence(String s, String t) {
         if (s == null || s.isEmpty()) {
             return true;
@@ -1227,6 +1227,205 @@ public class MyArrayList {
             }
         }
         return Arrays.copyOfRange(res, 0, i);
+    }
+
+    /**
+     * 1013. 将数组分成和相等的三个部分
+     */
+    public boolean canThreePartsEqualSum(int[] arr) {
+        if (arr == null || arr.length < 3) {
+            return false;
+        }
+        int sum = 0;
+        for (int num : arr) {
+            sum += num;
+        }
+        if (sum % 3 != 0) {
+            return false;
+        }
+        int i = 0;
+        int target = sum / 3;
+        int cur = 0;
+        while (i < arr.length) {
+            cur += arr[i];
+            if (cur == target) {
+                break;
+            }
+            i++;
+        }
+        if (cur != target) {
+            return false;
+        }
+        i += 1;
+        while (i < arr.length) {
+            cur += arr[i];
+            if (cur == target * 2) {
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
+
+    /**
+     * 386. 字典序排数
+     */
+    public List<Integer> lexicalOrder(int n) {
+        List<Integer> list = new ArrayList<>();
+        int num = 1;
+        for (int i = 0; i < n; i++) {
+            list.add(num);
+            if (num * 10 < n) {
+                num *= 10;
+            } else {
+                while (num + 1 > n || num % 10 == 9) {
+                    num /= 10;
+                }
+                num++;
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 386. 移动零
+     */
+    public void moveZeroes(int[] nums) {
+        if (nums == null || nums.length < 1) {
+            return;
+        }
+        int j = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                swap(nums, i, j);
+                j++;
+            }
+        }
+
+    }
+
+    /**
+     * 54. 螺旋矩阵
+     */
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> list = new ArrayList<>();
+        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
+            return list;
+        }
+        int u = 0;
+        int d = matrix.length - 1;
+        int l = 0;
+        int r = matrix[0].length - 1;
+        while (true) {
+            for (int i = l; i <= r; i++) list.add(matrix[u][i]);
+            if (++u > d) break;
+            for (int i = u; i <= d; i++) list.add(matrix[i][r]);
+            if (--r < l) break;
+            for (int i = r; i >= l; i--) list.add(matrix[d][i]);
+            if (--d < u) break;
+            for (int i = d; i >= u; i--) list.add(matrix[i][l]);
+            if (++l >= r) break;
+        }
+        return list;
+    }
+
+    /**
+     * 面试题 01.07. 旋转矩阵
+     * <a href="https://leetcode.cn/problems/rotate-matrix-lcci/description/">LeetCode</a>
+     */
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        for (int[] ints : matrix) {
+            reverse(ints, 0, n);
+        }
+    }
+
+    public void rotate2(int[][] matrix) {
+        int n = matrix.length;
+        int[][] temp = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                temp[j][n - i - 1] = matrix[i][j];
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = temp[i][j];
+            }
+        }
+    }
+
+    /**
+     * 209. 长度最小的子数组
+     * <a href="https://leetcode.cn/problems/minimum-size-subarray-sum/description/?envType=list&envId=hU60vjRS">LeetCode</a>
+     */
+    public int minSubArrayLen(int target, int[] nums) {
+        int len = nums.length;
+        int[] sums = new int[len + 1];
+        for (int i = 1; i <= len; i++) {
+            sums[i] = sums[i - 1] + nums[i - 1];
+        }
+        int res = Integer.MAX_VALUE;
+        for (int i = 1; i <= len; i++) {
+            int temp = target + sums[i - 1];
+            int index = Arrays.binarySearch(sums, temp);
+            if (index < 0) {
+                index = -index - 1;
+            }
+            if (index <= len) {
+                res = Math.min(res, index - i + 1);
+            }
+        }
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+
+    /**
+     * 560. 和为 K 的子数组
+     */
+    public int subarraySum(int[] nums, int k) {
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int sum = nums[i];
+            if (sum == k) {
+                res++;
+            }
+            for (int j = i + 1; j < nums.length; j++) {
+                sum += nums[j];
+                if (sum == k) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public int subarraySum2(int[] nums, int k) {
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+        int res = 0;
+        int pre = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        for (int num : nums) {
+            pre += num;
+            if (map.containsKey(pre - k)) {
+                res += map.get(pre - k);
+            }
+            map.put(pre, map.getOrDefault(pre, 0) + 1);
+        }
+        return res;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.ralf.dp;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +62,29 @@ public class DynamicPlan {
             arr[i] = arr[i - 1] + arr[i - 2];
         }
         return arr[n];
+    }
+
+    /**
+     * 746. 使用最小花费爬楼梯
+     */
+    public int minCostClimbingStairs(int[] cost) {
+        int[] dp = new int[cost.length + 1];
+        dp[0] = dp[1] = 0;
+        for (int i = 2; i <= cost.length; i++) {
+            dp[i] = Math.min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
+        }
+        return dp[cost.length];
+    }
+
+    public int minCostClimbingStairs2(int[] cost) {
+        int pre = 0;
+        int cur = 0;
+        for (int i = 2; i <= cost.length; i++) {
+            int temp = Math.min(cur + cost[i - 1], pre + cost[i - 2]);
+            pre = cur;
+            cur = temp;
+        }
+        return cur;
     }
 
     /**
@@ -497,35 +521,6 @@ public class DynamicPlan {
         return max;
     }
 
-
-    /**
-     * 300. 最长递增子序列
-     * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
-     * 子序列 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。
-     * <a href="https://leetcode.cn/problems/longest-increasing-subsequence/description/">Leet Code</a>
-     */
-    static int lengthOfLIS(int[] nums) {
-        if (nums == null || nums.length < 1) {
-            return 0;
-        }
-        if (nums.length == 1) {
-            return 1;
-        }
-        int[] dp = new int[nums.length];
-        dp[0] = 1;
-        int max = 1;
-        for (int i = 1; i < nums.length; i++) {
-            dp[i] = 1;
-            for (int j = 0; j < i; j++) {
-                if (nums[j] < nums[i]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-            max = Math.max(max, dp[i]);
-        }
-        return max;
-    }
-
     /**
      * 5. 最长回文子串
      * 给你一个字符串 s，找到 s 中最长的回文子串。
@@ -555,6 +550,29 @@ public class DynamicPlan {
             right++;
         }
         return right - left - 1;
+    }
+
+    /**
+     * 516. 最长回文子序列
+     */
+    public int longestPalindromeSubseq(String s) {
+        if (s == null || s.isEmpty()) {
+            return 0;
+        }
+        int n = s.length();
+        char[] chars = s.toCharArray();
+        int[][] dp = new int[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            dp[i][i] = 1;
+            for (int j = i + 1; j < n; j++) {
+                if (chars[i] == chars[j]) {
+                    dp[i][j] = dp[i + 1][j - 1] + 2;
+                } else {
+                    dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[0][n - 1];
     }
 
     /**
@@ -630,6 +648,36 @@ public class DynamicPlan {
             }
         }
         return dp[m][n];
+    }
+
+    /**
+     * 最长公共子序列 求字符串而不是长度
+     */
+    static String longestCommonSubsequenceII(String str1, String str2) {
+        if (str1 == null || str1.isEmpty() || str2 == null || str2.isEmpty()) {
+            return "";
+        }
+        int m = str1.length();
+        int n = str2.length();
+        int index = 0;
+        int maxLength = 0;
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            char ch1 = str1.charAt(i - 1);
+            for (int j = 1; j <= n; j++) {
+                char ch2 = str2.charAt(j - 1);
+                if (ch1 == ch2) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = 0;
+                }
+                if (dp[i][j] > maxLength) {
+                    index = i - 1;
+                    maxLength = dp[i][j];
+                }
+            }
+        }
+        return str1.substring(index - maxLength + 1, index + 1);
     }
 
     /**
@@ -786,6 +834,336 @@ public class DynamicPlan {
             }
         }
         return res;
+    }
+
+    public int findLength2(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums1.length < 1 || nums2 == null || nums2.length < 1) {
+            return 0;
+        }
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        int res = 0;
+        for (int i = 1; i <= len1; i++) {
+            int num = nums1[i - 1];
+            for (int j = 1; j <= len2; j++) {
+                if (num == nums2[j - 1]) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + 1);
+                }
+                res = Math.max(dp[i][j], res);
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 583. 两个字符串的删除操作
+     */
+    public int minDistance(String word1, String word2) {
+        int len1 = word1.length();
+        int len2 = word2.length();
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        for (int i = 0; i <= len1; i++)
+            dp[i][0] = i;
+        for (int i = 0; i <= len2; i++)
+            dp[0][i] = i;
+        for (int i = 1; i <= len1; i++) {
+            for (int j = 1; j <= len2; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i][j - 1], dp[i - 1][j]) + 1;
+                }
+            }
+        }
+        return dp[len1][len2];
+    }
+
+    /**
+     * 72. 编辑距离
+     */
+    public int minDistance1(String word1, String word2) {
+        int len1 = word1.length();
+        int len2 = word2.length();
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        for (int i = 0; i <= len1; i++) dp[i][0] = i;
+        for (int i = 0; i <= len2; i++) dp[0][i] = i;
+        for (int i = 1; i <= len1; i++) {
+            for (int j = 1; j <= len2; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(Math.min(dp[i][j - 1], dp[i - 1][j]), dp[i - 1][j - 1]) + 1;
+                }
+            }
+        }
+        return dp[len1][len2];
+    }
+
+    /**
+     * LCR 161. 连续天数的最高销售额
+     */
+    public int maxSales(int[] sales) {
+        if (sales == null || sales.length < 1) {
+            return 0;
+        }
+        int length = sales.length;
+        int[] dp = new int[length + 1];
+        dp[0] = sales[0];
+        int res = dp[0];
+        for (int i = 1; i < length; i++) {
+            if (dp[i - 1] > 0) {
+                dp[i] = dp[i - 1] + sales[i];
+            } else {
+                dp[i] = sales[i];
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
+    public int maxSales2(int[] sales) {
+        if (sales == null || sales.length < 1) {
+            return 0;
+        }
+        int length = sales.length;
+        int res = sales[0];
+        int pre = sales[0];
+        for (int i = 1; i < length; i++) {
+            pre = Math.max(sales[i], pre + sales[i]);
+            res = Math.max(res, pre);
+        }
+        return res;
+    }
+
+    /**
+     * 152. 乘积最大子数组
+     */
+    public int maxProduct(int[] nums) {
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+        int res = Integer.MIN_VALUE;
+        int max = 1;
+        int min = 1;
+        for (int num : nums) {
+            if (num < 0) {
+                int temp = min;
+                min = max;
+                max = temp;
+            }
+            max = Math.max(num, num * max);
+            min = Math.min(num, num * min);
+            res = Math.max(res, max);
+        }
+        return res;
+    }
+
+    /**
+     * 300. 最长递增子序列
+     * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
+     * 子序列 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。
+     * <a href="https://leetcode.cn/problems/longest-increasing-subsequence/description/">Leet Code</a>
+     */
+    static int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return 1;
+        }
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int max = 1;
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+
+    /**
+     * 435. 无重叠区间
+     */
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals == null || intervals.length < 1 || intervals[0].length < 1) {
+            return 0;
+        }
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[1] - o2[1];
+            }
+        });
+        int length = intervals.length;
+        int count = 1;
+        int right = intervals[0][1];
+        for (int i = 1; i < length; i++) {
+            if (intervals[i][0] >= right) {
+                count++;
+                right = intervals[i][1];
+            }
+        }
+        return length - count;
+    }
+
+    /**
+     * 435. 无重叠区间
+     */
+    public int eraseOverlapIntervals2(int[][] intervals) {
+        if (intervals == null || intervals.length < 1 || intervals[0].length < 1) {
+            return 0;
+        }
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+        int length = intervals.length;
+        int[] dp = new int[length];
+        dp[0] = 1;
+        int count = 1;
+        for (int i = 1; i < length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (intervals[j][1] <= intervals[i][0]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+                count = Math.max(count, dp[i]);
+            }
+        }
+        return length - count;
+    }
+
+
+    /**
+     * 646. 最长数对链
+     */
+    public int findLongestChain(int[][] pairs) {
+        Arrays.sort(pairs, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[1] == o2[1] ? o1[0] - o2[0] : o1[1] - o2[1];
+            }
+        });
+        int count = 1;
+        int right = pairs[0][1];
+        for (int i = 1; i < pairs.length; i++) {
+            if (pairs[i][0] > right) {
+                count++;
+                right = pairs[i][1];
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 452. 用最少数量的箭引爆气球
+     */
+    public static int findMinArrowShots(int[][] points) {
+        Arrays.sort(points, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[1] > o2[1] ? 1 : o1[1] < o2[1] ? -1 : 0;
+            }
+        });
+        int count = 1;
+        int right = points[0][1];
+        for (int i = 1; i < points.length; i++) {
+            if (points[i][0] > right) {
+                count++;
+                right = points[i][1];
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 354. 俄罗斯套娃信封问题
+     */
+    public int maxEnvelopes(int[][] envelopes) {
+        if (envelopes == null || envelopes.length < 1 || envelopes[0].length < 1) {
+            return 0;
+        }
+        Arrays.sort(envelopes, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] == o2[0] ? o1[1] - o2[1] : o1[0] - o2[0];
+            }
+        });
+        int length = envelopes.length;
+        int[] dp = new int[length];
+        dp[0] = 1;
+        int max = 1;
+        for (int i = 1; i < length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (envelopes[i][0] > envelopes[j][0] && envelopes[i][1] > envelopes[j][1]) {
+                    dp[i] = Math.max(dp[j] + 1, dp[i]);
+                }
+                max = Math.max(max, dp[i]);
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 面试题 08.13. 堆箱子
+     */
+    public static int pileBox(int[][] box) {
+        Arrays.sort(box, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] != o2[0] ? o1[0] - o2[0] : o1[1] == o2[1] ? o1[2] - o2[2] : o1[1] - o2[1];
+            }
+        });
+        int length = box.length;
+        int[] dp = new int[length];
+        for (int i = 0; i < length; i++) {
+            dp[i] = box[i][2];
+        }
+        int max = dp[0];
+        for (int i = 1; i < length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (box[i][0] > box[j][0] && box[i][1] > box[j][1] && box[i][2] > box[j][2]) {
+                    dp[i] = Math.max(dp[i], dp[j] + box[i][2]);
+                }
+                max = Math.max(dp[i], max);
+            }
+        }
+        return max;
+    }
+
+    public int subarraySum(int[] nums, int k) {
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int sum = nums[i];
+            if (sum == k) {
+                res++;
+            }
+            for (int j = i + 1; j < nums.length; j++) {
+                sum += nums[j];
+                if (sum == k) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        int[][] arr = {{3, 3, 8}, {3, 6, 5}, {7, 1, 6}};
+        int count = pileBox(arr);
+        System.out.printf("pileBox count " + count);
     }
 }
 

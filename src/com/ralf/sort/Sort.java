@@ -103,15 +103,16 @@ class Sort {
     }
 
     static void mergeSort(int[] nums, int left, int right, int[] temp) {
-        if (left < right) {
-            int mid = (left + right) >> 1;
-            mergeSort(nums, left, mid, temp);
-            mergeSort(nums, mid + 1, right, temp);
-            if (nums[mid] < nums[mid + 1]) {
-                return;
-            }
-            merge2(nums, left, mid, right, temp);
+        if (left >= right) {
+            return;
         }
+        int mid = (left + right) >> 1;
+        mergeSort(nums, left, mid, temp);
+        mergeSort(nums, mid + 1, right, temp);
+        if (nums[mid] < nums[mid + 1]) {
+            return;
+        }
+        merge2(nums, left, mid, right, temp);
     }
 
     private static void merge(int[] nums, int left, int mid, int right, int[] temp) {

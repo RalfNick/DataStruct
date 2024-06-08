@@ -290,4 +290,56 @@ public class BackTrack {
         }
         return result;
     }
+
+    /**
+     * 93. 复原 IP 地址
+     */
+    public List<String> restoreIpAddresses(String s) {
+        List<String> list = new ArrayList<>();
+        if (s == null || s.length() < 4 || s.length() > 12) {
+            return list;
+        }
+        Deque<String> path = new ArrayDeque<>(4);
+        restoreIpAddressesDfs(s, 0, s.length(), 0, path, list);
+        return list;
+    }
+
+    private void restoreIpAddressesDfs(String s, int begin, int length, int count, Deque<String> path, List<String> list) {
+        if (begin == length) {
+            if (count == 4) {
+                list.add(String.join(".", path));
+            }
+            return;
+        }
+        if (length - begin < (4 - count) || length - begin > 3 * (4 - count)) {
+            return;
+        }
+        for (int i = 0; i < 3; i++) {
+            if (begin + i >= length) {
+                break;
+            }
+            int ip = string2Ip(s, begin, begin + i);
+            if (ip == -1) {
+                continue;
+            }
+            path.add(ip + "");
+            restoreIpAddressesDfs(s, begin + i + 1, length, count + 1, path, list);
+            path.removeLast();
+        }
+    }
+
+    private int string2Ip(String s, int left, int right) {
+        int len = right - left + 1;
+        if (len > 1 && s.charAt(left) == '0') {
+            return -1;
+        }
+        int res = 0;
+        for (int i = left; i <= right; i++) {
+            res = res * 10 + (s.charAt(i) - '0');
+        }
+        if (res > 255) {
+            return -1;
+        }
+        return res;
+    }
 }

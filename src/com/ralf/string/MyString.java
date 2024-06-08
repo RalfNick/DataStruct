@@ -28,4 +28,56 @@ public class MyString {
         }
         return result;
     }
+
+    /**
+     * LCR 169. 招式拆解 II
+     */
+    public char dismantlingAction(String arr) {
+        Map<Character, Integer> map = new HashMap<>();
+        char[] chars = arr.toCharArray();
+        for (char ch : chars) {
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+        for (char ch : chars) {
+            if (map.get(ch) == 1) {
+                return ch;
+            }
+        }
+        return ' ';
+    }
+
+    /**
+     * 415. 字符串相加
+     */
+    public String addStrings(String num1, String num2) {
+        if (num1.isEmpty()) {
+            return num2;
+        }
+        if (num2.isEmpty()) {
+            return num1;
+        }
+        char[] num1CharArray = num1.toCharArray();
+        char[] num2CharArray = num2.toCharArray();
+        int len1 = num1CharArray.length;
+        int len2 = num2CharArray.length;
+        int i = len1 - 1;
+        int j = len2 - 1;
+        int carry = 0;
+        StringBuilder builder = new StringBuilder();
+        while (i >= 0 || j >= 0) {
+            int x = i >= 0 ? num1CharArray[i] - '0' : 0;
+            int y = j >= 0 ? num2CharArray[j] - '0' : 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            int result = sum % 10;
+            builder.append(result);
+            i--;
+            j--;
+        }
+        if (carry > 0) {
+            builder.append(carry);
+        }
+
+        return builder.reverse().toString();
+    }
 }

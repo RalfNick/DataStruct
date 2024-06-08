@@ -694,6 +694,32 @@ public class MyTree {
         path.remove(path.size() - 1);
     }
 
+    /**
+     * 437. 路径总和 III
+     */
+    public int pathSumIII(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        long res = pathSumDfs(root, targetSum);
+        res += pathSumIII(root.left, targetSum);
+        res += pathSumIII(root.right, targetSum);
+        return (int) res;
+    }
+
+    public long pathSumDfs(TreeNode root, long targetSum) {
+        long count = 0;
+        if (root == null) {
+            return 0;
+        }
+        if (root.val == targetSum) {
+            count++;
+        }
+        count += pathSumDfs(root.left, targetSum - root.val);
+        count += pathSumDfs(root.right, targetSum - root.val);
+        return count;
+    }
+
     private static int maxPathSum = Integer.MIN_VALUE;
 
     /**
