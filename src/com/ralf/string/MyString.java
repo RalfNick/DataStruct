@@ -80,4 +80,48 @@ public class MyString {
 
         return builder.reverse().toString();
     }
+
+    /**
+     * 344. 反转字符串
+     */
+    public void reverseString(char[] s) {
+        if (s == null || s.length == 0) {
+            return;
+        }
+        int i = 0, j = s.length - 1;
+        while (i < j) {
+            char temp = s[i];
+            s[i] = s[j];
+            s[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    /**
+     * 557. 反转字符串中的单词 III
+     */
+    public String reverseWords(String s) {
+        if (s == null || s.isEmpty()) {
+            return s;
+        }
+        String[] strings = s.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String str : strings) {
+            char[] chars = str.toCharArray();
+            if (chars.length == 0) {
+                continue;
+            }
+            int i = 0, j = chars.length - 1;
+            while (i < j) {
+                char temp = chars[i];
+                chars[i] = chars[j];
+                chars[j] = temp;
+                i++;
+                j--;
+            }
+            sb.append(chars).append(" ");
+        }
+        return sb.deleteCharAt(sb.length() - 1).toString();
+    }
 }

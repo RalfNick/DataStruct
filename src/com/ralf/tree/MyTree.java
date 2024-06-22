@@ -1,7 +1,5 @@
 package com.ralf.tree;
 
-import com.sun.tools.javac.util.Pair;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -235,6 +233,20 @@ public class MyTree {
      * 题目数据保证答案将会在  32 位 带符号整数范围内。
      * <a href="https://leetcode.cn/problems/maximum-width-of-binary-tree/description/?envType=list&envId=TBxUr5QH">Leet Code</a>
      */
+    private static class Pair<F, S> {
+        F first;
+        S second;
+
+        Pair(F first, S second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        static <F, S> Pair<F, S> of(F first, S second) {
+            return new Pair<>(first, second);
+        }
+    }
+
     int widthOfBinaryTree(TreeNode root) {
         if (root == null) {
             return 0;
@@ -248,8 +260,8 @@ public class MyTree {
             int last = 0;
             for (int i = 0; i < size; i++) {
                 Pair<TreeNode, Integer> item = queue.poll();
-                TreeNode node = item.fst;
-                int index = item.snd;
+                TreeNode node = item.first;
+                int index = item.second;
                 if (first == 0 && node != null) {
                     first = index;
                 }
@@ -692,6 +704,30 @@ public class MyTree {
         pathSum(root.left, targetSum - root.val, path, list);
         pathSum(root.right, targetSum - root.val, path, list);
         path.remove(path.size() - 1);
+    }
+
+    /**
+     * 打印所有路径和
+     */
+    static List<Integer> pathSum2(TreeNode root) {
+        List<Integer> path = new ArrayList<>();
+        if (root == null) {
+            return path;
+        }
+        pathSum2(root, 0, path);
+        return path;
+    }
+
+    private static void pathSum2(TreeNode root, int sum, List<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        sum += root.val;
+        if (root.left == null && root.right == null) {
+            path.add(sum);
+        }
+        pathSum2(root.left, sum, path);
+        pathSum2(root.right, sum, path);
     }
 
     /**

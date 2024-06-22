@@ -1324,7 +1324,7 @@ public class MyArrayList {
             for (int i = r; i >= l; i--) list.add(matrix[d][i]);
             if (--d < u) break;
             for (int i = d; i >= u; i--) list.add(matrix[i][l]);
-            if (++l >= r) break;
+            if (++l > r) break;
         }
         return list;
     }
@@ -1426,6 +1426,34 @@ public class MyArrayList {
             map.put(pre, map.getOrDefault(pre, 0) + 1);
         }
         return res;
+    }
+
+    /**
+     * 4. 寻找两个正序数组的中位数
+     */
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.length, n = nums2.length;
+        if (m > n) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        int iMin = 0, iMax = m;
+        while (iMin <= iMax) {
+            int i = (iMin + iMax) / 2;
+            int j = (m + n + 1) / 2 - i;
+            if (j != 0 && i != m && nums2[j - 1] > nums1[i]) {
+                iMin = i + 1;
+            } else if (i != 0 && j != n && nums1[i - 1] > nums2[j]) {
+                iMax = i - 1;
+            } else {
+                int maxLeft = i == 0 ? nums2[j - 1] : j == 0 ? nums1[i - 1] : Math.max(nums1[i - 1], nums2[j - 1]);
+                if ((m + n) % 2 != 0) {
+                    return maxLeft;
+                }
+                int minRight = i == m ? nums2[j] : j == n ? nums1[i] : Math.min(nums1[i], nums2[j]);
+                return (maxLeft + minRight) / 2.0;
+            }
+        }
+        return 0;
     }
 }
 
