@@ -223,6 +223,9 @@ public class BackTrack {
 
     private static void subsetsWithDup(int[] nums, int index, int length, ArrayList<Integer> path, List<List<Integer>> list) {
         list.add(new ArrayList<>(path));
+        if (index >= length) {
+            return;
+        }
         for (int i = index; i < length; i++) {
             if (i > index && nums[i] == nums[i - 1]) {
                 continue;

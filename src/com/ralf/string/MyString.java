@@ -124,4 +124,59 @@ public class MyString {
         }
         return sb.deleteCharAt(sb.length() - 1).toString();
     }
+
+    /**
+     * 43. 字符串相乘
+     */
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        String ans = "0";
+        int m = num1.length(), n = num2.length();
+        for (int i = n - 1; i >= 0; i--) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = n - 1; j > i; j--) {
+                sb.append("0");
+            }
+            int add = 0;
+            int y = num2.charAt(i) - '0';
+            for (int j = m - 1; j >= 0; j--) {
+                int x = num1.charAt(j) - '0';
+                int sum = x * y + add;
+                add = sum / 10;
+                sb.append(sum % 10);
+            }
+            if (add != 0) {
+                sb.append(add);
+            }
+            ans = addTwoNumbers(ans, sb.reverse().toString());
+        }
+        return ans;
+    }
+
+    private String addTwoNumbers(String num1, String num2) {
+        if (num1 == null || num1.isEmpty()) {
+            return num2;
+        }
+        if (num2 == null || num2.isEmpty()) {
+            return num1;
+        }
+        int i = num1.length() - 1, j = num2.length() - 1;
+        int carry = 0;
+        StringBuilder sb = new StringBuilder();
+        while (i >= 0 || j >= 0) {
+            int x = i >= 0 ? num1.charAt(i) - '0' : 0;
+            int y = j >= 0 ? num2.charAt(j) - '0' : 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            sb.append(sum % 10);
+            i--;
+            j--;
+        }
+        if (carry > 0) {
+            sb.append(carry);
+        }
+        return sb.reverse().toString();
+    }
 }

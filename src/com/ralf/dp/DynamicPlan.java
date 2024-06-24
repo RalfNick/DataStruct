@@ -1140,26 +1140,6 @@ public class DynamicPlan {
         return max;
     }
 
-    public int subarraySum(int[] nums, int k) {
-        if (nums == null || nums.length < 1) {
-            return 0;
-        }
-        int res = 0;
-        for (int i = 0; i < nums.length; i++) {
-            int sum = nums[i];
-            if (sum == k) {
-                res++;
-            }
-            for (int j = i + 1; j < nums.length; j++) {
-                sum += nums[j];
-                if (sum == k) {
-                    res++;
-                }
-            }
-        }
-        return res;
-    }
-
     public static void main(String[] args) {
         int[][] arr = {{3, 3, 8}, {3, 6, 5}, {7, 1, 6}};
         int count = pileBox(arr);

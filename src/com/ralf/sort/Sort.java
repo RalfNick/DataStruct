@@ -221,11 +221,12 @@ class Sort {
         }
         int k = 0;
         for (List<Integer> list : buckets) {
-            if (!list.isEmpty()) {
-                Collections.sort(list);
-                for (int item : list) {
-                    nums[k++] = item;
-                }
+            if (list.isEmpty()) {
+                continue;
+            }
+            Collections.sort(list);
+            for (int item : list) {
+                nums[k++] = item;
             }
         }
     }

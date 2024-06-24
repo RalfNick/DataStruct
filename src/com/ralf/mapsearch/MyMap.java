@@ -24,7 +24,7 @@ public class MyMap {
             return 0;
         }
         grid[i][j] = '0';
-        int area = 0;
+        int area = 1;
         area += getArea(grid, i - 1, j, m, n);
         area += getArea(grid, i + 1, j, m, n);
         area += getArea(grid, i, j - 1, m, n);

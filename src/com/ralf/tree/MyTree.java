@@ -670,7 +670,7 @@ public class MyTree {
      */
     static boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) {
-            return targetSum == 0;
+            return false;
         }
         if (root.left == null && root.right == null && targetSum == root.val) {
             return true;
@@ -733,7 +733,7 @@ public class MyTree {
     /**
      * 437. 路径总和 III
      */
-    public int pathSumIII(TreeNode root, int targetSum) {
+    static int pathSumIII(TreeNode root, int targetSum) {
         if (root == null) {
             return 0;
         }
@@ -743,7 +743,7 @@ public class MyTree {
         return (int) res;
     }
 
-    public long pathSumDfs(TreeNode root, long targetSum) {
+    static long pathSumDfs(TreeNode root, long targetSum) {
         long count = 0;
         if (root == null) {
             return 0;
